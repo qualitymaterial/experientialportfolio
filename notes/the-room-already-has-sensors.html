@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Room Already Has Sensors You're Not Using — Brian Anderson</title>
+<meta name="description" content="Before you buy a sensor, look at what the space is already emitting. Wi-Fi, sound, power draw, network traffic, existing AV signals — most rooms are broadcasting enough to know what's happening inside them. Here's how to read responsiveness out of signal that's already there." />
+<link rel="canonical" href="https://experientialportfolio.vercel.app/notes/the-room-already-has-sensors.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="The Room Already Has Sensors You're Not Using" />
+<meta property="og:description" content="Wi-Fi, sound, power, network traffic, AV signals — most spaces already broadcast enough to sense themselves. Read the signal that's already there before adding hardware." />
+<meta property="og:image" content="https://experientialportfolio.vercel.app/share.png" />
+<meta property="article:published_time" content="2026-06-16" />
+<meta property="article:author" content="Brian Anderson" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="The Room Already Has Sensors You're Not Using" />
+<meta name="twitter:description" content="Most spaces already broadcast enough signal to sense themselves." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239dff3f'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-size='15' font-weight='700' fill='%230b0b0c'%3EBA%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Room Already Has Sensors You're Not Using",
+  "description": "A survey of ambient sensing — reading presence, motion, and activity out of signals a space already emits (Wi-Fi, sound, power, network, AV) before adding dedicated hardware.",
+  "author": { "@type": "Person", "name": "Brian Anderson", "jobTitle": "AV Systems Engineer" },
+  "datePublished": "2026-06-16",
+  "articleSection": "Sensing",
+  "keywords": "ambient sensing, sensorless sensing, presence detection, occupancy, Wi-Fi sensing, acoustic sensing, edge computing, responsive environments"
+}
+</script>
+<style>
+:root{
+  --ink:#0b0b0c;--fg:#e9e5dc;--bone:#c9c4b6;--mut:#8c877c;--faint:#5c584f;
+  --signal:#9dff3f;--signal-dim:#4f8f20;--line:rgba(233,229,220,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+.mono{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--mut)}
+a{color:var(--signal);text-decoration:none}
+a:hover{text-decoration:underline}
+::selection{background:var(--signal);color:#0b0b0c}
+.bar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:14px max(20px,4vw);border-bottom:1px solid var(--line);background:rgba(11,11,12,.7);backdrop-filter:blur(10px)}
+.bar a.brand{color:var(--fg);font-family:'IBM Plex Mono';font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.bar a.back{color:var(--mut)}
+.wrap{width:min(720px,92vw);margin:0 auto;padding:72px 0 120px}
+article header{margin-bottom:56px;border-bottom:1px solid var(--line);padding-bottom:40px}
+.kick{display:flex;gap:16px;align-items:center;margin-bottom:28px;flex-wrap:wrap}
+.kick .cat{color:var(--signal)}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(2.1rem,5.5vw,3.6rem);line-height:1.04;letter-spacing:-.025em;margin-bottom:24px}
+.dek{font-size:clamp(1.1rem,2.4vw,1.4rem);color:var(--bone);line-height:1.5;max-width:54ch}
+article h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-.02em;margin:56px 0 18px;line-height:1.1}
+article p{margin-bottom:22px;color:#d6d2c8;font-size:1.08rem}
+article p.lead{font-size:1.2rem;color:var(--fg)}
+article strong{color:var(--fg);font-weight:500}
+article ul{margin:0 0 22px 0;padding-left:0;list-style:none}
+article li{position:relative;padding-left:24px;margin-bottom:12px;color:#d6d2c8}
+article li::before{content:'→';position:absolute;left:0;color:var(--signal)}
+blockquote{margin:40px 0;padding:4px 0 4px 28px;border-left:2px solid var(--signal);font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(1.3rem,3vw,1.9rem);line-height:1.25;letter-spacing:-.02em;color:var(--fg)}
+.stat-band{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:40px 0;border-radius:3px;overflow:hidden}
+.stat-band .s{background:var(--ink);padding:24px 20px}
+.stat-band .s .v{font-family:'Bricolage Grotesque';font-weight:700;font-size:1.9rem;color:var(--signal)}
+.stat-band .s .k{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-top:8px}
+@media(max-width:620px){.stat-band{grid-template-columns:1fr}}
+.cta{margin-top:80px;border:1px solid var(--line);border-radius:4px;padding:40px;background:linear-gradient(160deg,#101012,#0b0b0c)}
+.cta h3{font-family:'Bricolage Grotesque';font-weight:700;font-size:1.6rem;margin-bottom:12px;letter-spacing:-.02em}
+.cta p{color:var(--mut);margin-bottom:24px}
+.cta a.btn{display:inline-flex;align-items:center;gap:8px;background:var(--signal);color:#0b0b0c;padding:14px 24px;border-radius:2px;font-family:'IBM Plex Mono';font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.cta a.btn:hover{background:#bcff73;text-decoration:none}
+footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<nav class="bar">
+  <a class="brand" href="../index.html">◍ BRIAN ANDERSON</a>
+  <a class="back mono" href="../index.html#notes">← FIELD NOTES</a>
+</nav>
+
+<div class="wrap">
+<article>
+  <header>
+    <div class="kick mono"><span>2026.06</span><span class="cat">SENSING</span><span>· 7 MIN READ</span></div>
+    <h1>The Room Already Has Sensors You're Not Using</h1>
+    <p class="dek">The reflex, when you want a space to be aware, is to buy a sensor and mount it. But most rooms are already broadcasting enough signal to know what's happening inside them. Before you add hardware, read what's already there.</p>
+  </header>
+
+  <p class="lead">There's a habit worth unlearning: treating "sensing" as a thing you bolt onto a room. Want to know if a space is occupied? Buy an occupancy sensor. Want motion? Buy a motion sensor. It works, but it's often the expensive, invasive, brittle answer to a question the room was already answering — because most spaces are quietly emitting a dozen signals that each describe what's going on inside them. The skill isn't adding sensors. It's noticing the ones already running.</p>
+
+  <p>This is the single most useful principle I bring to responsive environments: <strong>start where the data already exists.</strong> A room full of working infrastructure is a room full of sensors that nobody has thought to read. Here's the inventory I walk through before I let anyone buy new hardware.</p>
+
+  <h2>The radio field — Wi-Fi as a motion sensor</h2>
+
+  <p>Every space with Wi-Fi is bathed in a radio field, and a body moving through that field measurably disturbs it. The same channel measurements a router makes just to move data can be read as motion and presence — no camera, nothing to wear. It's the cleanest example of a sensor hiding in plain sight, and I went deep on exactly how it works in <a href="reading-a-room-with-wifi.html">Reading a Room With Wi-Fi</a>. The point here is that it's not special — it's just the first of several.</p>
+
+  <h2>Sound — the room is always telling you its energy</h2>
+
+  <p>A space's own sound is one of the richest signals it produces, and most of it goes unread. You don't need to record or transcribe anything to learn a lot: the overall sound level tracks how busy and energetic a room is, its rhythm reveals tempo and activity, and the contrast between quiet and loud maps the arc of whatever's happening. A simple level meter at the edge turns ambient sound into a continuous, privacy-safe "energy" signal — the same kind of value that drives a reactive room or a live operations dashboard.</p>
+
+  <h2>Power and the network — occupancy without trying</h2>
+
+  <p>Two more signals almost every building already generates:</p>
+
+  <ul>
+    <li><strong>Power draw.</strong> What's drawing current, and when, is a remarkably honest occupancy and usage signal. Equipment that wakes up, lights that come on, gear that runs hot during a session — the electrical load is a timeline of how the space is actually used.</li>
+    <li><strong>Network traffic.</strong> Devices joining, leaving, and chattering on the local network are a rough but real proxy for how many people and things are present. You're not inspecting anyone's data — just counting presence from activity the network already logs.</li>
+  </ul>
+
+  <p>Neither requires a new device. Both are exhaust from systems that are running anyway.</p>
+
+  <h2>The AV signals you're already producing</h2>
+
+  <p>In any space with real AV, the most valuable signals are often the ones flowing through equipment you already installed: what's playing, the tempo of it, the schedule the room is running on, the state of the lighting. These are first-class data about the room's intent and rhythm, and they're sitting on a wire, usually unused beyond their original job. Tapping them costs nothing and tells you more about what the space <em>means</em> to be doing than any bolted-on sensor could.</p>
+
+  <div class="stat-band">
+    <div class="s"><div class="v">5+</div><div class="k">signals a typical room already emits</div></div>
+    <div class="s"><div class="v">$0</div><div class="k">new hardware to start reading them</div></div>
+    <div class="s"><div class="v">edge</div><div class="k">where the reading should happen</div></div>
+  </div>
+
+  <h2>None of them is enough alone — that's the point</h2>
+
+  <p>Here's the honest part. Each of these signals is partial. Sound tells you energy but not where. Wi-Fi tells you motion but not who. Power tells you usage but not intent. On its own, every one of them is coarse. But you're not picking one — you're <strong>composing</strong> them. Sound plus motion plus schedule, fused, describes a room far more completely and cheaply than any single dedicated sensor, and the redundancy makes the whole thing robust when one input gets noisy. The art is in the combination, not the individual reading.</p>
+
+  <blockquote>You don't need a better sensor. You need to read the five the room is already running, and let them agree with each other.</blockquote>
+
+  <h2>Read it at the edge, where the signal lives</h2>
+
+  <p>One practical rule ties this together: do the reading <em>in the room</em>. These signals are all local — the radio field, the sound, the power, the AV bus all live at the space, not in the cloud. Processing them at the edge keeps it fast, keeps it private (you extract a number, not a recording), and keeps the room working even when its connection doesn't. The signal is already there; meet it where it is.</p>
+
+  <h2>The principle: notice before you buy</h2>
+
+  <p>The most elegant sensing system is usually the one that adds the least, because it noticed what was already present. New hardware is the answer surprisingly rarely — and reaching for it first is how rooms end up cluttered with devices that duplicate signals the building was already broadcasting for free.</p>
+
+  <blockquote>Before you add a sensor, take inventory of what the room already emits. Most of the time, awareness is a reading problem, not a hardware problem.</blockquote>
+
+  <p>A space that knows itself isn't the one with the most sensors. It's the one where someone bothered to read the signals that were there the whole time — and that's almost always cheaper, quieter, and more robust than the thing you were about to buy.</p>
+
+  <div class="cta">
+    <h3>Want a space that senses itself — without a pile of new hardware?</h3>
+    <p>I read the signals a room already produces and turn them into responsiveness, with as little added gear as possible. Let's talk about yours.</p>
+    <a class="btn" href="../index.html#contact">Start a conversation →</a>
+  </div>
+</article>
+</div>
+
+<footer class="mono">
+  <span>© 2026 BRIAN ANDERSON</span>
+  <a href="../index.html#notes">← ALL FIELD NOTES</a>
+</footer>
+</body>
+</html>
