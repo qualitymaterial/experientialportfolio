@@ -16,6 +16,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/persistent-audio.css" />
+<script type="module" src="/assets/persistent-navigation.mjs"></script>
 <style>
 :root{
   --ink:#0b0b0c; --panel:#101012; --paper:#e9e5dc; --bone:#c9c4b6;
@@ -53,9 +55,6 @@ main,.statusbar,footer{position:relative;z-index:2}
 .dotlive{width:6px;height:6px;border-radius:50%;background:var(--signal);display:inline-block;margin-right:6px;box-shadow:0 0 8px var(--signal);animation:bl 1.6s infinite}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
 @media(max-width:780px){.statusbar .hideS{display:none}}
-#audio-btn{background:none;border:none;color:var(--mut);cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:0;display:flex;align-items:center;gap:5px;transition:color .25s}
-#audio-btn:hover{color:var(--signal)}
-#audio-btn.playing{color:var(--signal)}
 
 .palette{position:fixed;right:max(20px,3vw);bottom:20px;z-index:60;display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid var(--line);background:rgba(11,11,12,.62);backdrop-filter:blur(12px);border-radius:999px}
 .palette span{color:var(--mut);font-size:10px}
@@ -208,9 +207,8 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;paddin
 
 <div class="statusbar mono">
   <div class="seg"><span><b style="color:var(--fg);font-weight:500">BRIAN ANDERSON</b></span><span class="hideS">AV SYSTEMS · REACTIVE EXPERIENCES</span><a href="#notes">FIELD NOTES</a></div>
-  <div class="seg"><span class="hideS">NEW YORK</span><span id="clock">--:--:--</span><span class="live"><span class="dotlive"></span>AVAILABLE</span><button id="audio-btn" type="button" aria-label="Play music">♪ <span id="audio-track">MUSIC</span></button></div>
+  <div class="seg"><span class="hideS">NEW YORK</span><span id="clock">--:--:--</span><span class="live"><span class="dotlive"></span>AVAILABLE</span></div>
 </div>
-<audio id="audio-el" preload="none"></audio>
 <div class="palette mono" aria-label="Choose signal color">
   <span>SIGNAL</span>
   <button type="button" data-accent="volt" class="active" style="--swatch:#9dff3f" aria-label="Volt green signal color"></button>
@@ -617,25 +615,6 @@ document.querySelectorAll('.rev,.clip').forEach(el=>io.observe(el));
 
 document.querySelectorAll('[data-edit="cal"]').forEach(a=>a.setAttribute('href','https://cal.com/brian-anderson-4pmuol/30min'));
 document.querySelectorAll('[data-edit="x"]').forEach(a=>a.setAttribute('href','https://x.com/'));
-
-/* audio player */
-(function(){
-  var tracks=[
-    {src:'audio/shadows-of-the-samurai.mp3',label:'SHADOWS OF THE SAMURAI'},
-    {src:'audio/clean-windows.mp3',label:'CLEAN WINDOWS'}
-  ];
-  var idx=0;
-  var el=document.getElementById('audio-el');
-  var btn=document.getElementById('audio-btn');
-  var lbl=document.getElementById('audio-track');
-  function load(i){idx=i%tracks.length;el.src=tracks[idx].src;lbl.textContent=tracks[idx].label;}
-  load(0);
-  el.addEventListener('ended',function(){load(idx+1);el.play();});
-  btn.addEventListener('click',function(){
-    if(el.paused){el.play();btn.classList.add('playing');btn.setAttribute('aria-label','Pause music');}
-    else{el.pause();btn.classList.remove('playing');lbl.textContent=tracks[idx].label;btn.setAttribute('aria-label','Play music');}
-  });
-})();
 </script>
 </body>
 </html>

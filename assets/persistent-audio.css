@@ -1,0 +1,57 @@
+#persistent-audio-host {
+  position: fixed;
+  z-index: 100;
+  right: max(20px, 3vw);
+  top: 68px;
+}
+
+.persistent-audio__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(233, 229, 220, .18);
+  border-radius: 999px;
+  padding: 9px 12px;
+  background: rgba(11, 11, 12, .76);
+  backdrop-filter: blur(12px);
+  color: #8c877c;
+  cursor: pointer;
+  font: 11px 'IBM Plex Mono', monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.persistent-audio__button:hover,
+.persistent-audio__button:focus-visible {
+  border-color: var(--signal, #9dff3f);
+  color: var(--signal, #9dff3f);
+  outline: none;
+}
+
+.persistent-audio__button[data-playing="true"] {
+  color: var(--signal, #9dff3f);
+}
+
+#route-root {
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+#route-root[data-loading="true"] {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+@media (max-width: 640px) {
+  #persistent-audio-host {
+    right: 16px;
+    top: 56px;
+  }
+
+  .persistent-audio__track {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #route-root { transition: none; }
+}

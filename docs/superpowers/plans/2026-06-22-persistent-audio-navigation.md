@@ -13,8 +13,8 @@
 ## File Structure
 
 - Create: `assets/persistent-audio.css` — fixed player UI and route-transition styles shared by all documents.
-- Create: `assets/persistent-navigation.js` — audio state, same-origin router, metadata replacement, accessibility/focus behavior, and pure helpers exported for Node tests.
-- Create: `assets/home-experience.js` — homepage-only visual effect mount/unmount registry.
+- Create: `assets/persistent-navigation.mjs` — audio state, same-origin router, metadata replacement, accessibility/focus behavior, and pure helpers exported for Node tests.
+- Create: `assets/home-experience.mjs` — homepage-only visual effect mount/unmount registry.
 - Create: `tests/persistent-navigation.test.mjs` — Node tests for link interception and URL/hash routing helpers.
 - Modify: `index.html` — mark route-only styles/content/scripts, remove the embedded player, load shared assets, and register homepage effects.
 - Modify: `v3-experiential.html` — mirror `index.html` while the duplicate remains published in the repository.
@@ -24,7 +24,7 @@
 
 **Files:**
 - Create: `tests/persistent-navigation.test.mjs`
-- Create: `assets/persistent-navigation.js`
+- Create: `assets/persistent-navigation.mjs`
 
 - [ ] **Step 1: Write the failing helper tests**
 
@@ -35,7 +35,7 @@ import {
   isRoutableLocation,
   shouldInterceptLink,
   targetScrollId,
-} from '../assets/persistent-navigation.js';
+} from '../assets/persistent-navigation.mjs';
 
 test('routes only same-origin portfolio documents', () => {
   assert.equal(isRoutableLocation(new URL('https://site.test/notes/test.html'), new URL('https://site.test/')), true);
@@ -60,7 +60,7 @@ test('extracts a hash target without the leading hash', () => {
 
 Run: `node --test tests/persistent-navigation.test.mjs`
 
-Expected: `ERR_MODULE_NOT_FOUND` because `assets/persistent-navigation.js` does not exist.
+Expected: `ERR_MODULE_NOT_FOUND` because `assets/persistent-navigation.mjs` does not exist.
 
 - [ ] **Step 3: Add the minimal exported helpers**
 
@@ -88,7 +88,7 @@ Expected: all three tests pass.
 - [ ] **Step 5: Commit the test foundation**
 
 ```bash
-git add tests/persistent-navigation.test.mjs assets/persistent-navigation.js
+git add tests/persistent-navigation.test.mjs assets/persistent-navigation.mjs
 git commit -m "test: cover persistent navigation helpers"
 ```
 
@@ -145,7 +145,7 @@ Add to each document head:
 
 ```html
 <link rel="stylesheet" href="/assets/persistent-audio.css" />
-<script type="module" src="/assets/persistent-navigation.js"></script>
+<script type="module" src="/assets/persistent-navigation.mjs"></script>
 ```
 
 Wrap every page-specific body node in:
@@ -178,7 +178,7 @@ node - <<'NODE'
 const fs = require('fs');
 for (const file of ['index.html', 'v3-experiential.html', ...fs.readdirSync('notes').filter((f) => f.endsWith('.html')).map((f) => `notes/${f}`)]) {
   const html = fs.readFileSync(file, 'utf8');
-  if (!html.includes('id="route-root"') || !html.includes('id="persistent-audio-host"') || !html.includes('/assets/persistent-navigation.js')) throw new Error(`Missing route shell in ${file}`);
+  if (!html.includes('id="route-root"') || !html.includes('id="persistent-audio-host"') || !html.includes('/assets/persistent-navigation.mjs')) throw new Error(`Missing route shell in ${file}`);
 }
 console.log('route shell present in every document');
 NODE
@@ -196,7 +196,7 @@ git commit -m "feat: add persistent audio shell"
 ### Task 3: Implement Audio State And Progressive Navigation
 
 **Files:**
-- Modify: `assets/persistent-navigation.js`
+- Modify: `assets/persistent-navigation.mjs`
 
 - [ ] **Step 1: Implement a persistent audio controller**
 
@@ -218,7 +218,7 @@ promise leaves the player paused with an accurate accessible label.
 
 - [ ] **Step 2: Implement document parsing and asset replacement**
 
-Add these functions to `assets/persistent-navigation.js`:
+Add these functions to `assets/persistent-navigation.mjs`:
 
 ```js
 function parseRoute(html) {
@@ -297,20 +297,20 @@ Expected: all helper tests pass.
 - [ ] **Step 5: Commit router and audio state**
 
 ```bash
-git add assets/persistent-navigation.js tests/persistent-navigation.test.mjs
+git add assets/persistent-navigation.mjs tests/persistent-navigation.test.mjs
 git commit -m "feat: preserve music across internal navigation"
 ```
 
 ### Task 4: Give Homepage Effects A Lifecycle
 
 **Files:**
-- Create: `assets/home-experience.js`
+- Create: `assets/home-experience.mjs`
 - Modify: `index.html`
 - Modify: `v3-experiential.html`
 
 - [ ] **Step 1: Move the existing homepage visual runtime behind mount/unmount hooks**
 
-`assets/home-experience.js` must expose `window.homeExperience` with these
+`assets/home-experience.mjs` must expose `window.homeExperience` with these
 methods:
 
 ```js
@@ -357,7 +357,7 @@ Expected: `all executable inline scripts parse`.
 - [ ] **Step 4: Commit homepage lifecycle work**
 
 ```bash
-git add assets/home-experience.js index.html v3-experiential.html
+git add assets/home-experience.mjs index.html v3-experiential.html
 git commit -m "refactor: lifecycle homepage visual effects"
 ```
 
