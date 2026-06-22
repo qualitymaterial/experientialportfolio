@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sub-250ms: Latency in a Live Telemetry Platform — Brian Anderson</title>
-<meta name="description" content="“Real-time” is a number, not a vibe. Here's the dual-path architecture behind a live sound-monitoring platform that keeps sensor-to-screen latency under 250 milliseconds across distributed physical spaces — and why that threshold is the whole product." />
+<title>Sub-250ms: Latency in a Live Telemetry Platform - Brian Anderson</title>
+<meta name="description" content="“Real-time” is a number, not a vibe. Here's the dual-path architecture behind a live sound-monitoring platform that keeps sensor-to-screen latency under 250 milliseconds across distributed physical spaces - and why that threshold is the whole product." />
 <link rel="canonical" href="https://experientialportfolio.vercel.app/notes/sub-250ms-latency-in-a-live-telemetry-platform.html" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Sub-250ms: Latency in a Live Telemetry Platform" />
-<meta property="og:description" content="The dual-path architecture behind a real-time sound-monitoring platform — and why the latency budget is the product." />
+<meta property="og:description" content="The dual-path architecture behind a real-time sound-monitoring platform - and why the latency budget is the product." />
 <meta property="og:image" content="https://experientialportfolio.vercel.app/share.png" />
 <meta property="article:published_time" content="2026-04-16" />
 <meta property="article:author" content="Brian Anderson" />
@@ -87,14 +87,14 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
   <header>
     <div class="kick mono"><span>2026.04</span><span class="cat">AUDIO</span><span>· 7 MIN READ</span></div>
     <h1>Sub-250ms: Latency in a Live Telemetry Platform</h1>
-    <p class="dek">“Real-time” is a number, not a vibe. On a platform that monitors sound across distributed physical spaces, I treat 250 milliseconds as a hard budget — the line between a dashboard that feels live and one that feels like a report. Here's the architecture that holds it.</p>
+    <p class="dek">“Real-time” is a number, not a vibe. On a platform that monitors sound across distributed physical spaces, I treat 250 milliseconds as a hard budget - the line between a dashboard that feels live and one that feels like a report. Here's the architecture that holds it.</p>
   </header>
 
-  <p class="lead">When someone says a system is "real-time," ask them for the number. Real-time isn't a feeling — it's a latency budget, and if nobody's defined it, nobody's defended it. On a live sound-monitoring platform I built to measure sound pressure across many physical spaces at once, that number is <strong>250 milliseconds</strong>: the time from a microphone sensing a change to that change appearing on a screen. Everything in the architecture exists to protect it.</p>
+  <p class="lead">When someone says a system is "real-time," ask them for the number. Real-time isn't a feeling - it's a latency budget, and if nobody's defined it, nobody's defended it. On a live sound-monitoring platform I built to measure sound pressure across many physical spaces at once, that number is <strong>250 milliseconds</strong>: the time from a microphone sensing a change to that change appearing on a screen. Everything in the architecture exists to protect it.</p>
 
   <h2>Why 250 milliseconds, specifically</h2>
 
-  <p>The threshold isn't arbitrary. Around a quarter of a second is roughly where human perception stops reading two events as cause-and-effect and starts reading them as the same event. Under it, a number on a dashboard moves <em>as</em> the room gets louder — the operator trusts it, reacts to it, makes decisions on it. Over it, the value is always reporting a moment that has already passed, and people quietly stop believing it. The latency budget isn't a performance stat. It's whether the tool is trustworthy.</p>
+  <p>The threshold isn't arbitrary. Around a quarter of a second is roughly where human perception stops reading two events as cause-and-effect and starts reading them as the same event. Under it, a number on a dashboard moves <em>as</em> the room gets louder - the operator trusts it, reacts to it, makes decisions on it. Over it, the value is always reporting a moment that has already passed, and people quietly stop believing it. The latency budget isn't a performance stat. It's whether the tool is trustworthy.</p>
 
   <blockquote>Real-time is a latency budget, not a vibe. If nobody can name the number, nobody is defending it.</blockquote>
 
@@ -107,18 +107,18 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
     <li><strong>Lose nothing.</strong> Persist every reading durably, in order, so you can grade compliance, chart trends, and prove what happened hours or weeks later.</li>
   </ul>
 
-  <p>If you try to serve both from one pipeline, you lose both. Make the live path go through the durable database and every screen update inherits write latency, retries, and indexing. Make the durable path keep up with the live cadence and you hammer storage with traffic it was never shaped for. The fix isn't a faster single path — it's <strong>two paths</strong>.</p>
+  <p>If you try to serve both from one pipeline, you lose both. Make the live path go through the durable database and every screen update inherits write latency, retries, and indexing. Make the durable path keep up with the live cadence and you hammer storage with traffic it was never shaped for. The fix isn't a faster single path - it's <strong>two paths</strong>.</p>
 
   <h2>The dual-path architecture</h2>
 
   <p>So the system splits the instant the data leaves the sensor. An <strong>edge agent</strong> in each space samples the sound level, does the signal processing locally, and emits a compact stream of readings. From there the data forks:</p>
 
   <ul>
-    <li><strong>The fast path</strong> — readings are pushed straight to live dashboards over a persistent connection, in-memory the whole way, no database in the loop. This is the path that has to clear the 250ms budget, so it's kept deliberately thin: minimal hops, minimal serialization, no blocking work.</li>
-    <li><strong>The durable path</strong> — the same readings flow, in parallel, into time-series storage on their own schedule. This path optimizes for completeness and order, not speed. It can buffer, batch, and retry without ever touching what the operator sees live.</li>
+    <li><strong>The fast path</strong> - readings are pushed straight to live dashboards over a persistent connection, in-memory the whole way, no database in the loop. This is the path that has to clear the 250ms budget, so it's kept deliberately thin: minimal hops, minimal serialization, no blocking work.</li>
+    <li><strong>The durable path</strong> - the same readings flow, in parallel, into time-series storage on their own schedule. This path optimizes for completeness and order, not speed. It can buffer, batch, and retry without ever touching what the operator sees live.</li>
   </ul>
 
-  <p>The two never block each other. The live view stays instant because the slow, important work of persistence happens off to the side. Decoupling them is the whole trick — and it's a pattern that shows up in every responsive system, not just this one.</p>
+  <p>The two never block each other. The live view stays instant because the slow, important work of persistence happens off to the side. Decoupling them is the whole trick - and it's a pattern that shows up in every responsive system, not just this one.</p>
 
   <div class="stat-band">
     <div class="s"><div class="v">&lt;250ms</div><div class="k">sensor → screen budget</div></div>
@@ -130,23 +130,23 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
 
   <p>You can't make latency you've already spent come back. If raw audio had to travel to the cloud to be turned into a sound-pressure number, the round trip alone would blow the budget before the data even reached a dashboard. So the meaningful computation happens <em>in the room</em>, on the edge agent: it ingests the signal, computes the metric, and ships a small, finished value instead of a fat raw stream.</p>
 
-  <p>That single decision — <strong>process at the source, transmit the result</strong> — buys back most of the budget. It also makes the system resilient: a space keeps measuring and grading locally even if its connection to the cloud hiccups, then reconciles through the durable path when the link returns. The edge isn't just faster; it's what keeps each room honest on its own.</p>
+  <p>That single decision - <strong>process at the source, transmit the result</strong> - buys back most of the budget. It also makes the system resilient: a space keeps measuring and grading locally even if its connection to the cloud hiccups, then reconciles through the durable path when the link returns. The edge isn't just faster; it's what keeps each room honest on its own.</p>
 
   <h2>Measure the budget, don't assume it</h2>
 
-  <p>The discipline that keeps a system like this honest is refusing to trust your own optimism about it. "It feels fast" is not a latency measurement. So the budget gets treated like any other requirement: instrument the path end to end, watch the real distribution, and care about the <strong>worst case, not the average</strong>. A system that's quick most of the time but stalls for a full second under load isn't real-time — it's real-time-ish, and the one moment it lags is the moment an operator needed it. You defend the tail, or you don't have a budget at all.</p>
+  <p>The discipline that keeps a system like this honest is refusing to trust your own optimism about it. "It feels fast" is not a latency measurement. So the budget gets treated like any other requirement: instrument the path end to end, watch the real distribution, and care about the <strong>worst case, not the average</strong>. A system that's quick most of the time but stalls for a full second under load isn't real-time - it's real-time-ish, and the one moment it lags is the moment an operator needed it. You defend the tail, or you don't have a budget at all.</p>
 
   <blockquote>“It feels fast” is not a measurement. Instrument the path, watch the worst case, and defend the tail.</blockquote>
 
   <h2>The principle: latency is a feature you design for</h2>
 
-  <p>It's tempting to treat speed as something you tune at the end — ship the features, then optimize. But responsiveness can't be bolted on. The 250ms budget shaped every structural decision here: where computation lives, how many hops the data takes, whether persistence and delivery share a pipeline. By the time you're "optimizing," those decisions are already made. Latency is an architecture choice, made first, or it's a problem you can't fix later.</p>
+  <p>It's tempting to treat speed as something you tune at the end - ship the features, then optimize. But responsiveness can't be bolted on. The 250ms budget shaped every structural decision here: where computation lives, how many hops the data takes, whether persistence and delivery share a pipeline. By the time you're "optimizing," those decisions are already made. Latency is an architecture choice, made first, or it's a problem you can't fix later.</p>
 
-  <p>This is the same reason a reactive room feels alive and a real-time dashboard feels trustworthy: someone decided, up front, that a human's perception threshold was a hard requirement — and then engineered backward from it. Make the budget explicit, design the whole path around it, and "real-time" stops being a marketing word and becomes a property you can actually point to.</p>
+  <p>This is the same reason a reactive room feels alive and a real-time dashboard feels trustworthy: someone decided, up front, that a human's perception threshold was a hard requirement - and then engineered backward from it. Make the budget explicit, design the whole path around it, and "real-time" stops being a marketing word and becomes a property you can actually point to.</p>
 
   <div class="cta">
     <h3>Need something that's actually real-time?</h3>
-    <p>I design live telemetry and sensing systems with explicit latency budgets — edge processing, decoupled data paths, and the discipline to defend the worst case. Let's talk about yours.</p>
+    <p>I design live telemetry and sensing systems with explicit latency budgets - edge processing, decoupled data paths, and the discipline to defend the worst case. Let's talk about yours.</p>
     <a class="btn" href="../index.html#contact">Start a conversation →</a>
   </div>
 </article>

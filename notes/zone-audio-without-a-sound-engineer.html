@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Zone Audio Without a Sound Engineer in the Room — Brian Anderson</title>
-<meta name="description" content="Most multi-zone audio systems are designed to be configured manually. The better design makes the DSP the persistent sound engineer — gain structure, automation logic, and preset design that holds intent across crowds, times of day, and staff who aren't audio people." />
+<title>Zone Audio Without a Sound Engineer in the Room - Brian Anderson</title>
+<meta name="description" content="Most multi-zone audio systems are designed to be configured manually. The better design makes the DSP the persistent sound engineer - gain structure, automation logic, and preset design that holds intent across crowds, times of day, and staff who aren't audio people." />
 <link rel="canonical" href="https://experientialportfolio.vercel.app/notes/zone-audio-without-a-sound-engineer.html" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Zone Audio Without a Sound Engineer in the Room" />
-<meta property="og:description" content="How to design a multi-zone audio system that holds its intent across different crowds, times of day, and staff — without someone behind a console." />
+<meta property="og:description" content="How to design a multi-zone audio system that holds its intent across different crowds, times of day, and staff - without someone behind a console." />
 <meta property="og:image" content="https://experientialportfolio.vercel.app/share.png" />
 <meta property="article:published_time" content="2026-06-22" />
 <meta property="article:author" content="Brian Anderson" />
@@ -26,7 +26,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Zone Audio Without a Sound Engineer in the Room",
-  "description": "How to design a multi-zone DSP system that holds its audio intent across different crowds, times of day, and non-technical staff — without manual intervention.",
+  "description": "How to design a multi-zone DSP system that holds its audio intent across different crowds, times of day, and non-technical staff - without manual intervention.",
   "author": { "@type": "Person", "name": "Brian Anderson", "jobTitle": "AV Systems Engineer" },
   "datePublished": "2026-06-22",
   "articleSection": "Audio",
@@ -87,24 +87,24 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
   <header>
     <div class="kick mono"><span>2026.06</span><span class="cat">AUDIO</span><span>· 7 MIN READ</span></div>
     <h1>Zone Audio Without a Sound Engineer in the Room</h1>
-    <p class="dek">Most multi-zone systems are designed to be adjusted. The better design makes the DSP the persistent sound engineer — so the room sounds right whether it's 6am or 8pm, empty or packed, staffed by an expert or a first-week hire.</p>
+    <p class="dek">Most multi-zone systems are designed to be adjusted. The better design makes the DSP the persistent sound engineer - so the room sounds right whether it's 6am or 8pm, empty or packed, staffed by an expert or a first-week hire.</p>
   </header>
 
-  <p class="lead">The most common failure mode in multi-zone audio isn't bad speakers or underpowered amps. It's a system that was designed to be corrected. Someone has to walk around and adjust levels. Someone has to remember which preset matches which time of day. Someone has to notice when zone 3 is bleeding into zone 4. The moment that person isn't there — or isn't paying attention — the system degrades. The room sounds like nobody's home.</p>
+  <p class="lead">The most common failure mode in multi-zone audio isn't bad speakers or underpowered amps. It's a system that was designed to be corrected. Someone has to walk around and adjust levels. Someone has to remember which preset matches which time of day. Someone has to notice when zone 3 is bleeding into zone 4. The moment that person isn't there - or isn't paying attention - the system degrades. The room sounds like nobody's home.</p>
 
-  <p>I've designed and maintained audio systems across many physical spaces operating in parallel, and the lesson that compounds fastest is this: <strong>manual intervention is a design failure, not a workaround.</strong> If your system needs a human to stay on top of it, it will fall apart the moment that human is busy. The goal of good zone audio design is to make the DSP the persistent sound engineer — one that doesn't clock out, doesn't get distracted, and doesn't forget the presets.</p>
+  <p>I've designed and maintained audio systems across many physical spaces operating in parallel, and the lesson that compounds fastest is this: <strong>manual intervention is a design failure, not a workaround.</strong> If your system needs a human to stay on top of it, it will fall apart the moment that human is busy. The goal of good zone audio design is to make the DSP the persistent sound engineer - one that doesn't clock out, doesn't get distracted, and doesn't forget the presets.</p>
 
-  <h2>Gain structure is the foundation — and most systems get it wrong</h2>
+  <h2>Gain structure is the foundation - and most systems get it wrong</h2>
 
   <p>Before automation, before presets, before any of the interesting stuff: gain structure. This is the unglamorous root of every multi-zone system that either holds up under pressure or falls apart when a room fills. The principle is simple and most systems violate it anyway.</p>
 
-  <p>Every device in the chain — source, DSP input, amplifier, speaker — has a nominal operating level and a headroom ceiling. When those are aligned, the system is quiet at rest, loud when pushed, and clear throughout. When they're misaligned, you get one or more of: hiss at low levels (gain too high early), clipping at high levels (headroom consumed early in the chain), or zones that can't keep up with adjacent ones (inconsistent reference levels across DSP outputs).</p>
+  <p>Every device in the chain - source, DSP input, amplifier, speaker - has a nominal operating level and a headroom ceiling. When those are aligned, the system is quiet at rest, loud when pushed, and clear throughout. When they're misaligned, you get one or more of: hiss at low levels (gain too high early), clipping at high levels (headroom consumed early in the chain), or zones that can't keep up with adjacent ones (inconsistent reference levels across DSP outputs).</p>
 
-  <p>The fix is also simple: align signal levels at every stage, set each device's input sensitivity correctly, and establish a shared reference level across all zones so that "100% volume on zone 2" and "100% volume on zone 4" actually mean the same thing acoustically. This is not exciting work. It's also not recoverable from later. Get gain structure right at the design stage and everything else — automation, presets, monitoring — builds on a stable floor.</p>
+  <p>The fix is also simple: align signal levels at every stage, set each device's input sensitivity correctly, and establish a shared reference level across all zones so that "100% volume on zone 2" and "100% volume on zone 4" actually mean the same thing acoustically. This is not exciting work. It's also not recoverable from later. Get gain structure right at the design stage and everything else - automation, presets, monitoring - builds on a stable floor.</p>
 
   <blockquote>If zone 3 needs to be set at 73 and zone 4 at 61 to sound matched, you have a gain structure problem. The DSP is compensating for a mistake that's further upstream.</blockquote>
 
-  <h2>Presets are the memory — design them like policies, not settings</h2>
+  <h2>Presets are the memory - design them like policies, not settings</h2>
 
   <p>A preset isn't a snapshot of what someone liked on a Tuesday. It's a policy decision about how the space should feel under a specific set of conditions. The distinction matters because presets get recalled by staff who didn't create them, on days nobody anticipated, in rooms that are half-full when they were designed for capacity. A preset designed as a policy survives that. A preset designed as a saved state doesn't.</p>
 
@@ -114,14 +114,14 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
     <li><strong>Name presets by intent, not by who made them.</strong> "Pre-class warm, doors open" is a policy. "Brian Tuesday setup" is a trap.</li>
     <li><strong>Design for the extremes, not the average.</strong> What should the room sound like completely empty? At capacity? Those two presets are your range; everything else interpolates between them.</li>
     <li><strong>Lock what shouldn't move.</strong> If staff don't need to touch EQ or compression, remove that control from the surface they have access to. The best preset is one that can't be accidentally overridden.</li>
-    <li><strong>Document the reason for each preset, not just the values.</strong> When someone asks "why is zone 1 at -6dB in the morning preset," the answer should be "because the HVAC runs harder pre-noon and that frequency range masks it" — not a shrug.</li>
+    <li><strong>Document the reason for each preset, not just the values.</strong> When someone asks "why is zone 1 at -6dB in the morning preset," the answer should be "because the HVAC runs harder pre-noon and that frequency range masks it" - not a shrug.</li>
   </ul>
 
   <h2>Automation logic: the DSP should know what time it is</h2>
 
-  <p>A system that requires a human to recall a preset is still a manually operated system — it just hides that dependency inside a button. The step beyond presets is scheduling: the DSP knows what time it is, what's happening in the space, and recalls the right configuration without being asked.</p>
+  <p>A system that requires a human to recall a preset is still a manually operated system - it just hides that dependency inside a button. The step beyond presets is scheduling: the DSP knows what time it is, what's happening in the space, and recalls the right configuration without being asked.</p>
 
-  <p>This isn't exotic. Most modern DSP platforms support scheduler logic natively, and wiring it to an operational calendar is usually a few lines of configuration or a simple control-system integration. The result is a system where the morning warmup state, the peak-activity state, and the post-close cooldown all happen on their own — and the only person who needs to know about it is the person who set it up once.</p>
+  <p>This isn't exotic. Most modern DSP platforms support scheduler logic natively, and wiring it to an operational calendar is usually a few lines of configuration or a simple control-system integration. The result is a system where the morning warmup state, the peak-activity state, and the post-close cooldown all happen on their own - and the only person who needs to know about it is the person who set it up once.</p>
 
   <p>The more capable version connects the scheduler to live signals: when the room goes active (tracked via the kind of ambient sensing I described in <a href="the-room-already-has-sensors.html">The Room Already Has Sensors You're Not Using</a>), the system transitions to the appropriate state. It responds to what the room is actually doing, not just what the clock says should be happening.</p>
 
@@ -131,29 +131,29 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
     <div class="s"><div class="v">policy</div><div class="k">what a preset actually is</div></div>
   </div>
 
-  <h2>Zone independence and bleed — the design problem nobody mentions up front</h2>
+  <h2>Zone independence and bleed - the design problem nobody mentions up front</h2>
 
-  <p>Multi-zone systems are supposed to let you run different audio in different spaces simultaneously. What they actually do, if you're not deliberate about it, is run different audio in spaces that are acoustically coupled — and then you have a bleed problem. Zone 1's energy bleeds into zone 2's physical space and fights with zone 2's program material. The result is a muddy, confused room that no amount of DSP can fully fix, because the problem is physical, not electrical.</p>
+  <p>Multi-zone systems are supposed to let you run different audio in different spaces simultaneously. What they actually do, if you're not deliberate about it, is run different audio in spaces that are acoustically coupled - and then you have a bleed problem. Zone 1's energy bleeds into zone 2's physical space and fights with zone 2's program material. The result is a muddy, confused room that no amount of DSP can fully fix, because the problem is physical, not electrical.</p>
 
-  <p>The fix is partly architectural (doors, wall construction, HVAC paths all matter) and partly in how you design the zones themselves. Adjacent zones should be programmed so their energy curves are complementary, not competing. If zone 1 is high-energy and high-SPL, zone 2 needs to either match that energy or be physically isolated from it — not running a soft background track at -20dB relative to zone 1's output, which is what happens when you let each zone be set independently without considering the relationship between them.</p>
+  <p>The fix is partly architectural (doors, wall construction, HVAC paths all matter) and partly in how you design the zones themselves. Adjacent zones should be programmed so their energy curves are complementary, not competing. If zone 1 is high-energy and high-SPL, zone 2 needs to either match that energy or be physically isolated from it - not running a soft background track at -20dB relative to zone 1's output, which is what happens when you let each zone be set independently without considering the relationship between them.</p>
 
   <h2>Monitoring: know before someone tells you</h2>
 
-  <p>The last piece of a system that holds up without constant attention is visibility into what it's actually doing. Not "everything seems fine" visibility — real telemetry. Which zones are active, what levels they're running, whether any amplifier channel has faulted, whether the source signal is present. This is the difference between finding out a zone went silent because a guest complained and finding out because a dashboard flagged it thirty seconds after it happened.</p>
+  <p>The last piece of a system that holds up without constant attention is visibility into what it's actually doing. Not "everything seems fine" visibility - real telemetry. Which zones are active, what levels they're running, whether any amplifier channel has faulted, whether the source signal is present. This is the difference between finding out a zone went silent because a guest complained and finding out because a dashboard flagged it thirty seconds after it happened.</p>
 
-  <p>I built a live telemetry layer across a distributed network of physical spaces specifically to solve this — sub-250ms latency from physical event to dashboard update, with alerting and trend history so you can see whether zone 3's average level has been creeping up (it always does) before it becomes a problem. The architecture behind that is worth its own piece (<a href="sub-250ms-latency-in-a-live-telemetry-platform.html">Sub-250ms: Latency in a Live Telemetry Platform</a>), but the operating principle is simple: the system should tell you what it's doing; you shouldn't have to ask.</p>
+  <p>I built a live telemetry layer across a distributed network of physical spaces specifically to solve this - sub-250ms latency from physical event to dashboard update, with alerting and trend history so you can see whether zone 3's average level has been creeping up (it always does) before it becomes a problem. The architecture behind that is worth its own piece (<a href="sub-250ms-latency-in-a-live-telemetry-platform.html">Sub-250ms: Latency in a Live Telemetry Platform</a>), but the operating principle is simple: the system should tell you what it's doing; you shouldn't have to ask.</p>
 
   <blockquote>A zone audio system that needs frequent human correction isn't finished. The design work isn't done until the DSP can run the room without you.</blockquote>
 
   <h2>The standard I hold multi-zone design to</h2>
 
-  <p>Here's the test I apply before calling a system done: can a person with no audio background walk into any space on the network, on any day, at any time of day, and have the room sound the way it was designed to sound — without touching anything? Not "can they not break it." Can they walk in and find a room that sounds like a professional put real thought into it?</p>
+  <p>Here's the test I apply before calling a system done: can a person with no audio background walk into any space on the network, on any day, at any time of day, and have the room sound the way it was designed to sound - without touching anything? Not "can they not break it." Can they walk in and find a room that sounds like a professional put real thought into it?</p>
 
-  <p>When the answer is yes, it means the gain structure is right, the presets are policies, the automation knows the schedule, the zones are designed with their neighbors in mind, and the telemetry is watching. The sound engineer is still in the room — they're just inside the DSP, working every hour the space is open.</p>
+  <p>When the answer is yes, it means the gain structure is right, the presets are policies, the automation knows the schedule, the zones are designed with their neighbors in mind, and the telemetry is watching. The sound engineer is still in the room - they're just inside the DSP, working every hour the space is open.</p>
 
   <div class="cta">
     <h3>Running audio across multiple spaces and tired of chasing it?</h3>
-    <p>I design multi-zone systems that hold their intent without hand-holding — gain structure, DSP logic, scheduling, and telemetry built in from the start. Let's talk about yours.</p>
+    <p>I design multi-zone systems that hold their intent without hand-holding - gain structure, DSP logic, scheduling, and telemetry built in from the start. Let's talk about yours.</p>
     <a class="btn" href="../index.html#contact">Start a conversation →</a>
   </div>
 </article>

@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Making a Room Respond to Its Own Energy — Brian Anderson</title>
-<meta name="description" content="Most “immersive” visuals are just video on a timeline — they ignore the room. Here's how to drive projection and light from the space's own live signals, so the environment performs itself in real time instead of playing back a recording." />
+<title>Making a Room Respond to Its Own Energy - Brian Anderson</title>
+<meta name="description" content="Most “immersive” visuals are just video on a timeline - they ignore the room. Here's how to drive projection and light from the space's own live signals, so the environment performs itself in real time instead of playing back a recording." />
 <link rel="canonical" href="https://experientialportfolio.vercel.app/notes/making-a-room-respond-to-its-own-energy.html" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Making a Room Respond to Its Own Energy" />
-<meta property="og:description" content="Driving live projection and light from a space's own audio, tempo, and motion — so the room performs itself instead of playing back a video." />
+<meta property="og:description" content="Driving live projection and light from a space's own audio, tempo, and motion - so the room performs itself instead of playing back a video." />
 <meta property="og:image" content="https://experientialportfolio.vercel.app/share.png" />
 <meta property="article:published_time" content="2026-05-08" />
 <meta property="article:author" content="Brian Anderson" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Making a Room Respond to Its Own Energy" />
-<meta name="twitter:description" content="Projection and light driven by the room's own live signal — not a timeline." />
+<meta name="twitter:description" content="Projection and light driven by the room's own live signal - not a timeline." />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239dff3f'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-size='15' font-weight='700' fill='%230b0b0c'%3EBA%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -87,21 +87,21 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
   <header>
     <div class="kick mono"><span>2026.05</span><span class="cat">PROJECTION</span><span>· 7 MIN READ</span></div>
     <h1>Making a Room Respond to Its Own Energy</h1>
-    <p class="dek">Most “immersive” visuals are a recording — a video on a timeline that would play out identically to an empty room. The interesting version reads what's actually happening in the space and answers it, live. Here's how you build a room that performs itself.</p>
+    <p class="dek">Most “immersive” visuals are a recording - a video on a timeline that would play out identically to an empty room. The interesting version reads what's actually happening in the space and answers it, live. Here's how you build a room that performs itself.</p>
   </header>
 
-  <p class="lead">There's a moment in a great room where the lights and the visuals feel like they're <em>listening</em> — they swell exactly when the energy lifts, they breathe when it drops, and it doesn't feel scripted because it isn't. That's the difference between projection that plays <em>at</em> a room and projection that responds <em>to</em> one. The first is a video file. The second is a system.</p>
+  <p class="lead">There's a moment in a great room where the lights and the visuals feel like they're <em>listening</em> - they swell exactly when the energy lifts, they breathe when it drops, and it doesn't feel scripted because it isn't. That's the difference between projection that plays <em>at</em> a room and projection that responds <em>to</em> one. The first is a video file. The second is a system.</p>
 
-  <p>Almost everything sold as "immersive" is the first kind: beautiful pre-rendered content on a loop, running on a fixed timeline. It looks identical whether the room is packed and roaring or completely empty. The visuals don't know the difference, because nothing connects them to the room. What I build instead is the connection — a live loop where the space's own signals drive what appears on its walls.</p>
+  <p>Almost everything sold as "immersive" is the first kind: beautiful pre-rendered content on a loop, running on a fixed timeline. It looks identical whether the room is packed and roaring or completely empty. The visuals don't know the difference, because nothing connects them to the room. What I build instead is the connection - a live loop where the space's own signals drive what appears on its walls.</p>
 
   <h2>Sense, process, respond</h2>
 
   <p>Every reactive environment I build is the same three-stage loop, running many times a second:</p>
 
   <ul>
-    <li><strong>Sense</strong> — pull live signal out of the room: the audio itself, its tempo and beat, the track that's playing, motion and occupancy, even light levels.</li>
-    <li><strong>Process</strong> — turn those raw signals into clean, usable control values: an energy score, a beat trigger, a smoothed intensity curve.</li>
-    <li><strong>Respond</strong> — map those values onto what the room outputs: projection, lighting, generative visuals, color, motion.</li>
+    <li><strong>Sense</strong> - pull live signal out of the room: the audio itself, its tempo and beat, the track that's playing, motion and occupancy, even light levels.</li>
+    <li><strong>Process</strong> - turn those raw signals into clean, usable control values: an energy score, a beat trigger, a smoothed intensity curve.</li>
+    <li><strong>Respond</strong> - map those values onto what the room outputs: projection, lighting, generative visuals, color, motion.</li>
   </ul>
 
   <p>Get that loop tight and fast enough and the room stops feeling like it's playing a file. It feels aware.</p>
@@ -110,9 +110,9 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
 
   <h2>The signal has to be aggregated before it's useful</h2>
 
-  <p>The mistake people make is wiring one input straight to one output — beat to a strobe, done. It reads as a gimmick because it is one. The real work is upstream: collecting <em>every</em> live signal in the room into a single unified stream that the visual engine can subscribe to.</p>
+  <p>The mistake people make is wiring one input straight to one output - beat to a strobe, done. It reads as a gimmick because it is one. The real work is upstream: collecting <em>every</em> live signal in the room into a single unified stream that the visual engine can subscribe to.</p>
 
-  <p>That's the role of a signal hub — one process that ingests sound level, tempo, now-playing, and motion, normalizes them, and republishes them on a common bus (I lean on <strong>OSC</strong> for this) so anything downstream can listen. Once the room's state exists as clean, addressable data, the visuals become a <em>function</em> of that state rather than a fixed sequence. Change the room and the output changes with it — automatically, every time.</p>
+  <p>That's the role of a signal hub - one process that ingests sound level, tempo, now-playing, and motion, normalizes them, and republishes them on a common bus (I lean on <strong>OSC</strong> for this) so anything downstream can listen. Once the room's state exists as clean, addressable data, the visuals become a <em>function</em> of that state rather than a fixed sequence. Change the room and the output changes with it - automatically, every time.</p>
 
   <div class="stat-band">
     <div class="s"><div class="v">4+</div><div class="k">live signals fused per room</div></div>
@@ -122,25 +122,25 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
 
   <h2>The engine: a patch, not a video file</h2>
 
-  <p>The visuals themselves run in a real-time engine — <strong>TouchDesigner</strong> is my center of gravity for this — where the output is generated live from those incoming values instead of read off disk. A parameter isn't a keyframe on a timeline; it's wired to the room's energy score. When the room lifts, the parameter lifts, and the image lifts with it. Nothing was pre-decided.</p>
+  <p>The visuals themselves run in a real-time engine - <strong>TouchDesigner</strong> is my center of gravity for this - where the output is generated live from those incoming values instead of read off disk. A parameter isn't a keyframe on a timeline; it's wired to the room's energy score. When the room lifts, the parameter lifts, and the image lifts with it. Nothing was pre-decided.</p>
 
-  <p>For deployment that has to survive a real venue and a real operator, the generative engine gets paired with a dependable playback and mapping layer — tools like Resolume and MadMapper for projection mapping, blending, and show control — so the reactive material lands precisely on the architecture and an operator has reliable, human controls when the night gets busy. <strong>Generative where it earns its keep; rock-solid playback where reliability matters more than novelty.</strong></p>
+  <p>For deployment that has to survive a real venue and a real operator, the generative engine gets paired with a dependable playback and mapping layer - tools like Resolume and MadMapper for projection mapping, blending, and show control - so the reactive material lands precisely on the architecture and an operator has reliable, human controls when the night gets busy. <strong>Generative where it earns its keep; rock-solid playback where reliability matters more than novelty.</strong></p>
 
   <h2>Why latency is the whole game</h2>
 
-  <p>Here's the constraint that separates "responsive" from "laggy": the loop has to close faster than a person can notice. If the beat drops and the wall reacts a third of a second later, the spell breaks — the visuals read as <em>following</em> the room instead of moving <em>with</em> it. The target is to keep the entire sense-to-screen path under the threshold where a human perceives cause and effect as simultaneous.</p>
+  <p>Here's the constraint that separates "responsive" from "laggy": the loop has to close faster than a person can notice. If the beat drops and the wall reacts a third of a second later, the spell breaks - the visuals read as <em>following</em> the room instead of moving <em>with</em> it. The target is to keep the entire sense-to-screen path under the threshold where a human perceives cause and effect as simultaneous.</p>
 
-  <p>That's not a creative problem, it's an engineering one — and it's the same discipline behind every real-time system I build. (I went deep on exactly this in <a href="sub-250ms-latency-in-a-live-telemetry-platform.html">Sub-250ms</a>.) The art only works if the engineering underneath it is fast enough to disappear.</p>
+  <p>That's not a creative problem, it's an engineering one - and it's the same discipline behind every real-time system I build. (I went deep on exactly this in <a href="sub-250ms-latency-in-a-live-telemetry-platform.html">Sub-250ms</a>.) The art only works if the engineering underneath it is fast enough to disappear.</p>
 
   <blockquote>If you can perceive the delay, the magic is gone. Responsiveness lives or dies under a few hundred milliseconds.</blockquote>
 
   <h2>Protect the room, not just the spectacle</h2>
 
-  <p>One discipline I hold onto: reactive isn't the same as constant. A room that's screaming visual information at every moment exhausts people as fast as a static one bores them. The signal should be used to choose <em>when</em> to do less as much as when to do more — to let the visuals recede when the room is quiet and surge when it earns it. The dynamic range is the point. A reactive system that only knows how to escalate is just a louder kind of wallpaper.</p>
+  <p>One discipline I hold onto: reactive isn't the same as constant. A room that's screaming visual information at every moment exhausts people as fast as a static one bores them. The signal should be used to choose <em>when</em> to do less as much as when to do more - to let the visuals recede when the room is quiet and surge when it earns it. The dynamic range is the point. A reactive system that only knows how to escalate is just a louder kind of wallpaper.</p>
 
   <h2>The principle: the room is the performer</h2>
 
-  <p>The reason this matters beyond spectacle is what it does to a space's identity. A pre-rendered loop is the same in every venue you install it in. A reactive system is different in every room, every night, because it's driven by what's actually happening there — the crowd, the music, the energy in that specific moment. The content isn't shipped to the room. <strong>The room generates it.</strong></p>
+  <p>The reason this matters beyond spectacle is what it does to a space's identity. A pre-rendered loop is the same in every venue you install it in. A reactive system is different in every room, every night, because it's driven by what's actually happening there - the crowd, the music, the energy in that specific moment. The content isn't shipped to the room. <strong>The room generates it.</strong></p>
 
   <blockquote>Stop shipping content to the room. Wire the room up so it becomes the thing that's performing.</blockquote>
 
@@ -148,7 +148,7 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
 
   <div class="cta">
     <h3>Want a space that performs itself?</h3>
-    <p>I build reactive environments — projection and light driven by a room's own live signal, engineered to respond fast enough to feel alive. Let's talk about yours.</p>
+    <p>I build reactive environments - projection and light driven by a room's own live signal, engineered to respond fast enough to feel alive. Let's talk about yours.</p>
     <a class="btn" href="../index.html#contact">Start a conversation →</a>
   </div>
 </article>

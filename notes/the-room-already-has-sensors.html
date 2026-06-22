@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The Room Already Has Sensors You're Not Using — Brian Anderson</title>
-<meta name="description" content="Before you buy a sensor, look at what the space is already emitting. Wi-Fi, sound, power draw, network traffic, existing AV signals — most rooms are broadcasting enough to know what's happening inside them. Here's how to read responsiveness out of signal that's already there." />
+<title>The Room Already Has Sensors You're Not Using - Brian Anderson</title>
+<meta name="description" content="Before you buy a sensor, look at what the space is already emitting. Wi-Fi, sound, power draw, network traffic, existing AV signals - most rooms are broadcasting enough to know what's happening inside them. Here's how to read responsiveness out of signal that's already there." />
 <link rel="canonical" href="https://experientialportfolio.vercel.app/notes/the-room-already-has-sensors.html" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="The Room Already Has Sensors You're Not Using" />
-<meta property="og:description" content="Wi-Fi, sound, power, network traffic, AV signals — most spaces already broadcast enough to sense themselves. Read the signal that's already there before adding hardware." />
+<meta property="og:description" content="Wi-Fi, sound, power, network traffic, AV signals - most spaces already broadcast enough to sense themselves. Read the signal that's already there before adding hardware." />
 <meta property="og:image" content="https://experientialportfolio.vercel.app/share.png" />
 <meta property="article:published_time" content="2026-06-16" />
 <meta property="article:author" content="Brian Anderson" />
@@ -26,7 +26,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "The Room Already Has Sensors You're Not Using",
-  "description": "A survey of ambient sensing — reading presence, motion, and activity out of signals a space already emits (Wi-Fi, sound, power, network, AV) before adding dedicated hardware.",
+  "description": "A survey of ambient sensing - reading presence, motion, and activity out of signals a space already emits (Wi-Fi, sound, power, network, AV) before adding dedicated hardware.",
   "author": { "@type": "Person", "name": "Brian Anderson", "jobTitle": "AV Systems Engineer" },
   "datePublished": "2026-06-16",
   "articleSection": "Sensing",
@@ -90,25 +90,25 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
     <p class="dek">The reflex, when you want a space to be aware, is to buy a sensor and mount it. But most rooms are already broadcasting enough signal to know what's happening inside them. Before you add hardware, read what's already there.</p>
   </header>
 
-  <p class="lead">There's a habit worth unlearning: treating "sensing" as a thing you bolt onto a room. Want to know if a space is occupied? Buy an occupancy sensor. Want motion? Buy a motion sensor. It works, but it's often the expensive, invasive, brittle answer to a question the room was already answering — because most spaces are quietly emitting a dozen signals that each describe what's going on inside them. The skill isn't adding sensors. It's noticing the ones already running.</p>
+  <p class="lead">There's a habit worth unlearning: treating "sensing" as a thing you bolt onto a room. Want to know if a space is occupied? Buy an occupancy sensor. Want motion? Buy a motion sensor. It works, but it's often the expensive, invasive, brittle answer to a question the room was already answering - because most spaces are quietly emitting a dozen signals that each describe what's going on inside them. The skill isn't adding sensors. It's noticing the ones already running.</p>
 
   <p>This is the single most useful principle I bring to responsive environments: <strong>start where the data already exists.</strong> A room full of working infrastructure is a room full of sensors that nobody has thought to read. Here's the inventory I walk through before I let anyone buy new hardware.</p>
 
-  <h2>The radio field — Wi-Fi as a motion sensor</h2>
+  <h2>The radio field - Wi-Fi as a motion sensor</h2>
 
-  <p>Every space with Wi-Fi is bathed in a radio field, and a body moving through that field measurably disturbs it. The same channel measurements a router makes just to move data can be read as motion and presence — no camera, nothing to wear. It's the cleanest example of a sensor hiding in plain sight, and I went deep on exactly how it works in <a href="reading-a-room-with-wifi.html">Reading a Room With Wi-Fi</a>. The point here is that it's not special — it's just the first of several.</p>
+  <p>Every space with Wi-Fi is bathed in a radio field, and a body moving through that field measurably disturbs it. The same channel measurements a router makes just to move data can be read as motion and presence - no camera, nothing to wear. It's the cleanest example of a sensor hiding in plain sight, and I went deep on exactly how it works in <a href="reading-a-room-with-wifi.html">Reading a Room With Wi-Fi</a>. The point here is that it's not special - it's just the first of several.</p>
 
-  <h2>Sound — the room is always telling you its energy</h2>
+  <h2>Sound - the room is always telling you its energy</h2>
 
-  <p>A space's own sound is one of the richest signals it produces, and most of it goes unread. You don't need to record or transcribe anything to learn a lot: the overall sound level tracks how busy and energetic a room is, its rhythm reveals tempo and activity, and the contrast between quiet and loud maps the arc of whatever's happening. A simple level meter at the edge turns ambient sound into a continuous, privacy-safe "energy" signal — the same kind of value that drives a reactive room or a live operations dashboard.</p>
+  <p>A space's own sound is one of the richest signals it produces, and most of it goes unread. You don't need to record or transcribe anything to learn a lot: the overall sound level tracks how busy and energetic a room is, its rhythm reveals tempo and activity, and the contrast between quiet and loud maps the arc of whatever's happening. A simple level meter at the edge turns ambient sound into a continuous, privacy-safe "energy" signal - the same kind of value that drives a reactive room or a live operations dashboard.</p>
 
-  <h2>Power and the network — occupancy without trying</h2>
+  <h2>Power and the network - occupancy without trying</h2>
 
   <p>Two more signals almost every building already generates:</p>
 
   <ul>
-    <li><strong>Power draw.</strong> What's drawing current, and when, is a remarkably honest occupancy and usage signal. Equipment that wakes up, lights that come on, gear that runs hot during a session — the electrical load is a timeline of how the space is actually used.</li>
-    <li><strong>Network traffic.</strong> Devices joining, leaving, and chattering on the local network are a rough but real proxy for how many people and things are present. You're not inspecting anyone's data — just counting presence from activity the network already logs.</li>
+    <li><strong>Power draw.</strong> What's drawing current, and when, is a remarkably honest occupancy and usage signal. Equipment that wakes up, lights that come on, gear that runs hot during a session - the electrical load is a timeline of how the space is actually used.</li>
+    <li><strong>Network traffic.</strong> Devices joining, leaving, and chattering on the local network are a rough but real proxy for how many people and things are present. You're not inspecting anyone's data - just counting presence from activity the network already logs.</li>
   </ul>
 
   <p>Neither requires a new device. Both are exhaust from systems that are running anyway.</p>
@@ -123,26 +123,26 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
     <div class="s"><div class="v">edge</div><div class="k">where the reading should happen</div></div>
   </div>
 
-  <h2>None of them is enough alone — that's the point</h2>
+  <h2>None of them is enough alone - that's the point</h2>
 
-  <p>Here's the honest part. Each of these signals is partial. Sound tells you energy but not where. Wi-Fi tells you motion but not who. Power tells you usage but not intent. On its own, every one of them is coarse. But you're not picking one — you're <strong>composing</strong> them. Sound plus motion plus schedule, fused, describes a room far more completely and cheaply than any single dedicated sensor, and the redundancy makes the whole thing robust when one input gets noisy. The art is in the combination, not the individual reading.</p>
+  <p>Here's the honest part. Each of these signals is partial. Sound tells you energy but not where. Wi-Fi tells you motion but not who. Power tells you usage but not intent. On its own, every one of them is coarse. But you're not picking one - you're <strong>composing</strong> them. Sound plus motion plus schedule, fused, describes a room far more completely and cheaply than any single dedicated sensor, and the redundancy makes the whole thing robust when one input gets noisy. The art is in the combination, not the individual reading.</p>
 
   <blockquote>You don't need a better sensor. You need to read the five the room is already running, and let them agree with each other.</blockquote>
 
   <h2>Read it at the edge, where the signal lives</h2>
 
-  <p>One practical rule ties this together: do the reading <em>in the room</em>. These signals are all local — the radio field, the sound, the power, the AV bus all live at the space, not in the cloud. Processing them at the edge keeps it fast, keeps it private (you extract a number, not a recording), and keeps the room working even when its connection doesn't. The signal is already there; meet it where it is.</p>
+  <p>One practical rule ties this together: do the reading <em>in the room</em>. These signals are all local - the radio field, the sound, the power, the AV bus all live at the space, not in the cloud. Processing them at the edge keeps it fast, keeps it private (you extract a number, not a recording), and keeps the room working even when its connection doesn't. The signal is already there; meet it where it is.</p>
 
   <h2>The principle: notice before you buy</h2>
 
-  <p>The most elegant sensing system is usually the one that adds the least, because it noticed what was already present. New hardware is the answer surprisingly rarely — and reaching for it first is how rooms end up cluttered with devices that duplicate signals the building was already broadcasting for free.</p>
+  <p>The most elegant sensing system is usually the one that adds the least, because it noticed what was already present. New hardware is the answer surprisingly rarely - and reaching for it first is how rooms end up cluttered with devices that duplicate signals the building was already broadcasting for free.</p>
 
   <blockquote>Before you add a sensor, take inventory of what the room already emits. Most of the time, awareness is a reading problem, not a hardware problem.</blockquote>
 
-  <p>A space that knows itself isn't the one with the most sensors. It's the one where someone bothered to read the signals that were there the whole time — and that's almost always cheaper, quieter, and more robust than the thing you were about to buy.</p>
+  <p>A space that knows itself isn't the one with the most sensors. It's the one where someone bothered to read the signals that were there the whole time - and that's almost always cheaper, quieter, and more robust than the thing you were about to buy.</p>
 
   <div class="cta">
-    <h3>Want a space that senses itself — without a pile of new hardware?</h3>
+    <h3>Want a space that senses itself - without a pile of new hardware?</h3>
     <p>I read the signals a room already produces and turn them into responsiveness, with as little added gear as possible. Let's talk about yours.</p>
     <a class="btn" href="../index.html#contact">Start a conversation →</a>
   </div>

@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Reading a Room With Wi-Fi — Brian Anderson</title>
-<meta name="description" content="The Wi-Fi already in your space is a motion sensor you haven't switched on. Here's how channel-state information (CSI) turns ordinary radios into camera-free, wearable-free presence and motion sensing — and why it's the cleanest reactive input for a responsive environment." />
+<title>Reading a Room With Wi-Fi - Brian Anderson</title>
+<meta name="description" content="The Wi-Fi already in your space is a motion sensor you haven't switched on. Here's how channel-state information (CSI) turns ordinary radios into camera-free, wearable-free presence and motion sensing - and why it's the cleanest reactive input for a responsive environment." />
 <link rel="canonical" href="https://experientialportfolio.vercel.app/notes/reading-a-room-with-wifi.html" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Reading a Room With Wi-Fi" />
-<meta property="og:description" content="How channel-state information turns ordinary Wi-Fi radios into camera-free motion sensing — and why it's the cleanest reactive input for a responsive space." />
+<meta property="og:description" content="How channel-state information turns ordinary Wi-Fi radios into camera-free motion sensing - and why it's the cleanest reactive input for a responsive space." />
 <meta property="og:image" content="https://experientialportfolio.vercel.app/share.png" />
 <meta property="article:published_time" content="2026-06-12" />
 <meta property="article:author" content="Brian Anderson" />
@@ -87,26 +87,26 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
   <header>
     <div class="kick mono"><span>2026.06</span><span class="cat">SENSING</span><span>· 7 MIN READ</span></div>
     <h1>Reading a Room With Wi-Fi</h1>
-    <p class="dek">Every space with Wi-Fi already has a motion sensor running — it just hasn't been switched on. Here's how the same radios that carry your traffic can sense where people are and how they move, with no cameras and nothing to wear.</p>
+    <p class="dek">Every space with Wi-Fi already has a motion sensor running - it just hasn't been switched on. Here's how the same radios that carry your traffic can sense where people are and how they move, with no cameras and nothing to wear.</p>
   </header>
 
-  <p class="lead">Walk into almost any modern room and there's already a dense field of radio energy filling it — Wi-Fi, bouncing off the walls, the floor, the furniture, and you. We treat that field as plumbing: a pipe for data. But the same physics that makes Wi-Fi work also makes it a sensor, because the one thing that reliably disturbs a radio field is a body moving through it.</p>
+  <p class="lead">Walk into almost any modern room and there's already a dense field of radio energy filling it - Wi-Fi, bouncing off the walls, the floor, the furniture, and you. We treat that field as plumbing: a pipe for data. But the same physics that makes Wi-Fi work also makes it a sensor, because the one thing that reliably disturbs a radio field is a body moving through it.</p>
 
-  <p>I build environments that respond to what's happening inside them, and the hardest part is almost never the response — it's the <em>sensing</em>. How does a room know someone walked in? That a class just got intense? That a corner is empty? The obvious answer is cameras, and the obvious answer is wrong for most of the spaces I care about. So I went looking for a sensor that was already installed everywhere, that nobody had to wear, and that nobody would object to. It turned out to be the Wi-Fi.</p>
+  <p>I build environments that respond to what's happening inside them, and the hardest part is almost never the response - it's the <em>sensing</em>. How does a room know someone walked in? That a class just got intense? That a corner is empty? The obvious answer is cameras, and the obvious answer is wrong for most of the spaces I care about. So I went looking for a sensor that was already installed everywhere, that nobody had to wear, and that nobody would object to. It turned out to be the Wi-Fi.</p>
 
   <h2>The signal you're already ignoring</h2>
 
-  <p>When a Wi-Fi radio sends a packet, the receiver has to measure exactly how the signal arrived — how much it was delayed, attenuated, and phase-shifted on each of its subcarrier frequencies — just to decode the data correctly. That measurement is called <strong>channel-state information</strong>, or CSI. Every Wi-Fi link computes it constantly. It's the radio's picture of the room between the two antennas.</p>
+  <p>When a Wi-Fi radio sends a packet, the receiver has to measure exactly how the signal arrived - how much it was delayed, attenuated, and phase-shifted on each of its subcarrier frequencies - just to decode the data correctly. That measurement is called <strong>channel-state information</strong>, or CSI. Every Wi-Fi link computes it constantly. It's the radio's picture of the room between the two antennas.</p>
 
-  <p>Here's the key: that picture changes the instant anything in the room moves. The signal doesn't travel in a single straight line — it takes dozens of paths, reflecting off every surface, and all of those copies recombine at the receiver. Move a hand through one of those paths and you change the sum. The data still decodes fine; you'd never notice. But the CSI shifts measurably. <strong>The room's furniture, walls, and bodies are all written into that measurement</strong> — and the moving parts stand out from the still ones.</p>
+  <p>Here's the key: that picture changes the instant anything in the room moves. The signal doesn't travel in a single straight line - it takes dozens of paths, reflecting off every surface, and all of those copies recombine at the receiver. Move a hand through one of those paths and you change the sum. The data still decodes fine; you'd never notice. But the CSI shifts measurably. <strong>The room's furniture, walls, and bodies are all written into that measurement</strong> - and the moving parts stand out from the still ones.</p>
 
   <blockquote>A still room produces a steady channel. A body moving through it writes a signature. Sensing is just learning to read the difference.</blockquote>
 
-  <p>So the technique is, at its core, simple: capture CSI many times a second, watch how much it's changing from one moment to the next, and turn that into a single number — a <strong>motion-energy score</strong>. Flat line, empty room. Rising, someone's active. It's the same live value you'll see ticking on the home page of this site, pulled straight off a radio.</p>
+  <p>So the technique is, at its core, simple: capture CSI many times a second, watch how much it's changing from one moment to the next, and turn that into a single number - a <strong>motion-energy score</strong>. Flat line, empty room. Rising, someone's active. It's the same live value you'll see ticking on the home page of this site, pulled straight off a radio.</p>
 
   <h2>What it costs: about twelve dollars</h2>
 
-  <p>The thing that makes this practical rather than academic is that you don't need exotic hardware. A common <strong>ESP32</strong> microcontroller — a few dollars, the size of a stick of gum — can expose raw CSI from its Wi-Fi radio. Drop a couple of them into a space, point them at each other or at the existing access point, and you have a sensing layer for the price of a sandwich.</p>
+  <p>The thing that makes this practical rather than academic is that you don't need exotic hardware. A common <strong>ESP32</strong> microcontroller - a few dollars, the size of a stick of gum - can expose raw CSI from its Wi-Fi radio. Drop a couple of them into a space, point them at each other or at the existing access point, and you have a sensing layer for the price of a sandwich.</p>
 
   <div class="stat-band">
     <div class="s"><div class="v">~$12</div><div class="k">hardware per sensing link</div></div>
@@ -114,20 +114,20 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
     <div class="s"><div class="v">802.11bf</div><div class="k">Wi-Fi sensing standard, ratifying</div></div>
   </div>
 
-  <p>And this isn't a fringe hack anymore. The IEEE has an entire task group — <strong>802.11bf</strong> — formalizing Wi-Fi sensing as a first-class feature of the standard, so future access points will expose this capability natively. The hobbyist version I prototype with today is the early edge of something that's about to be built into the infrastructure everywhere.</p>
+  <p>And this isn't a fringe hack anymore. The IEEE has an entire task group - <strong>802.11bf</strong> - formalizing Wi-Fi sensing as a first-class feature of the standard, so future access points will expose this capability natively. The hobbyist version I prototype with today is the early edge of something that's about to be built into the infrastructure everywhere.</p>
 
   <h2>Why not just use a camera?</h2>
 
   <p>Because the camera is the wrong tool for the rooms I work in, on almost every axis that matters:</p>
 
   <ul>
-    <li><strong>Privacy.</strong> A camera records identifiable people. CSI is a single fluctuating number — it can tell you <em>that</em> the room is active and roughly where, but it has no face, no image, nothing to leak or subpoena. For a wellness space, a clinic, a home, or anywhere people expect not to be filmed, that distinction is the whole game.</li>
-    <li><strong>Darkness.</strong> Half the spaces I build for are deliberately dim — a dark studio, a stage, a lounge. Radio doesn't care about light. It works in pitch black exactly as well as in daylight.</li>
+    <li><strong>Privacy.</strong> A camera records identifiable people. CSI is a single fluctuating number - it can tell you <em>that</em> the room is active and roughly where, but it has no face, no image, nothing to leak or subpoena. For a wellness space, a clinic, a home, or anywhere people expect not to be filmed, that distinction is the whole game.</li>
+    <li><strong>Darkness.</strong> Half the spaces I build for are deliberately dim - a dark studio, a stage, a lounge. Radio doesn't care about light. It works in pitch black exactly as well as in daylight.</li>
     <li><strong>Coverage.</strong> Radio passes through partitions and around corners. One link can sense a volume a camera would need several angles to cover, with no blind spots behind the equipment.</li>
     <li><strong>Friction.</strong> Nobody installs an app, charges a wearable, or stands in the right spot. The sensing is ambient. People just exist in the room and the room already knows.</li>
   </ul>
 
-  <p>I want to be honest about the trade, though, because that's the difference between an engineer and a salesman. CSI sensing is <strong>coarse</strong>. It is fantastic at "is there motion, how much, roughly where" and it does not give you a skeleton, an identity, or a precise count of people. It drifts as the room's furniture changes and usually wants a short re-baseline. It is a presence-and-energy sensor, not a measuring tape. The skill is using it for exactly what it's good at — and reaching for vision only when you genuinely need to see.</p>
+  <p>I want to be honest about the trade, though, because that's the difference between an engineer and a salesman. CSI sensing is <strong>coarse</strong>. It is fantastic at "is there motion, how much, roughly where" and it does not give you a skeleton, an identity, or a precise count of people. It drifts as the room's furniture changes and usually wants a short re-baseline. It is a presence-and-energy sensor, not a measuring tape. The skill is using it for exactly what it's good at - and reaching for vision only when you genuinely need to see.</p>
 
   <h2>What you do with a number that means "the room is alive"</h2>
 
@@ -135,8 +135,8 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
 
   <ul>
     <li><strong>Reactive light and visuals</strong> that swell with the room's energy instead of running on a fixed timeline.</li>
-    <li><strong>Presence-aware infrastructure</strong> — screens, audio, and HVAC that wake on real occupancy and stand down when a zone is genuinely empty, not on a dumb timer.</li>
-    <li><strong>Operational signal</strong> — anonymous, aggregate occupancy and activity patterns across a space, with no one identified.</li>
+    <li><strong>Presence-aware infrastructure</strong> - screens, audio, and HVAC that wake on real occupancy and stand down when a zone is genuinely empty, not on a dumb timer.</li>
+    <li><strong>Operational signal</strong> - anonymous, aggregate occupancy and activity patterns across a space, with no one identified.</li>
     <li><strong>A trigger layer</strong> for experiences that should only fire when someone is actually there to witness them.</li>
   </ul>
 
@@ -144,15 +144,15 @@ footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;
 
   <h2>The principle: the room is already instrumented</h2>
 
-  <p>Wi-Fi sensing is the clearest example of an idea that runs under everything I build: the most elegant sensor is usually one that's already in the room, doing another job. Before you add hardware, ask what the space is <em>already emitting</em> — the radio field, the sound, the power draw, the network traffic — and whether you can read responsiveness out of that instead of bolting on more.</p>
+  <p>Wi-Fi sensing is the clearest example of an idea that runs under everything I build: the most elegant sensor is usually one that's already in the room, doing another job. Before you add hardware, ask what the space is <em>already emitting</em> - the radio field, the sound, the power draw, the network traffic - and whether you can read responsiveness out of that instead of bolting on more.</p>
 
-  <blockquote>The best sensor is the one that's already installed. You don't add it to the room — you notice it's been there all along.</blockquote>
+  <blockquote>The best sensor is the one that's already installed. You don't add it to the room - you notice it's been there all along.</blockquote>
 
-  <p>A camera-free room that still knows when it's alive isn't a compromise. It's a better-designed system — cheaper, more private, more robust, and invisible to the people inside it. That's what responsive environments should feel like: the room reacts, and you never see the wiring.</p>
+  <p>A camera-free room that still knows when it's alive isn't a compromise. It's a better-designed system - cheaper, more private, more robust, and invisible to the people inside it. That's what responsive environments should feel like: the room reacts, and you never see the wiring.</p>
 
   <div class="cta">
     <h3>Want a space that senses without watching?</h3>
-    <p>I design responsive environments and the sensing layers underneath them — camera-free where it counts. Let's talk about yours.</p>
+    <p>I design responsive environments and the sensing layers underneath them - camera-free where it counts. Let's talk about yours.</p>
     <a class="btn" href="../index.html#contact">Start a conversation →</a>
   </div>
 </article>
