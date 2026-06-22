@@ -17,4 +17,16 @@
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://experientialportfolio.vercel.app/notes/making-a-room-respond-to-its-own-energy.html</loc>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://experientialportfolio.vercel.app/notes/sub-250ms-latency-in-a-live-telemetry-platform.html</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

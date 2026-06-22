@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sub-250ms: Latency in a Live Telemetry Platform — Brian Anderson</title>
+<meta name="description" content="“Real-time” is a number, not a vibe. Here's the dual-path architecture behind a live sound-monitoring platform that keeps sensor-to-screen latency under 250 milliseconds across distributed physical spaces — and why that threshold is the whole product." />
+<link rel="canonical" href="https://experientialportfolio.vercel.app/notes/sub-250ms-latency-in-a-live-telemetry-platform.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Sub-250ms: Latency in a Live Telemetry Platform" />
+<meta property="og:description" content="The dual-path architecture behind a real-time sound-monitoring platform — and why the latency budget is the product." />
+<meta property="og:image" content="https://experientialportfolio.vercel.app/share.png" />
+<meta property="article:published_time" content="2026-04-16" />
+<meta property="article:author" content="Brian Anderson" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Sub-250ms: Latency in a Live Telemetry Platform" />
+<meta name="twitter:description" content="Why a few hundred milliseconds is the whole product in real-time telemetry." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239dff3f'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-size='15' font-weight='700' fill='%230b0b0c'%3EBA%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Sub-250ms: Latency in a Live Telemetry Platform",
+  "description": "The dual-path streaming architecture behind a real-time sound-monitoring platform that keeps sensor-to-screen latency under 250 milliseconds across distributed spaces.",
+  "author": { "@type": "Person", "name": "Brian Anderson", "jobTitle": "AV Systems Engineer" },
+  "datePublished": "2026-04-16",
+  "articleSection": "Audio",
+  "keywords": "real-time telemetry, latency, edge computing, streaming architecture, SPL monitoring, sound pressure level, time-series, WebSocket, IoT"
+}
+</script>
+<style>
+:root{
+  --ink:#0b0b0c;--fg:#e9e5dc;--bone:#c9c4b6;--mut:#8c877c;--faint:#5c584f;
+  --signal:#9dff3f;--signal-dim:#4f8f20;--line:rgba(233,229,220,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+.mono{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--mut)}
+a{color:var(--signal);text-decoration:none}
+a:hover{text-decoration:underline}
+::selection{background:var(--signal);color:#0b0b0c}
+.bar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:14px max(20px,4vw);border-bottom:1px solid var(--line);background:rgba(11,11,12,.7);backdrop-filter:blur(10px)}
+.bar a.brand{color:var(--fg);font-family:'IBM Plex Mono';font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.bar a.back{color:var(--mut)}
+.wrap{width:min(720px,92vw);margin:0 auto;padding:72px 0 120px}
+article header{margin-bottom:56px;border-bottom:1px solid var(--line);padding-bottom:40px}
+.kick{display:flex;gap:16px;align-items:center;margin-bottom:28px;flex-wrap:wrap}
+.kick .cat{color:var(--signal)}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(2.1rem,5.5vw,3.6rem);line-height:1.04;letter-spacing:-.025em;margin-bottom:24px}
+.dek{font-size:clamp(1.1rem,2.4vw,1.4rem);color:var(--bone);line-height:1.5;max-width:54ch}
+article h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-.02em;margin:56px 0 18px;line-height:1.1}
+article p{margin-bottom:22px;color:#d6d2c8;font-size:1.08rem}
+article p.lead{font-size:1.2rem;color:var(--fg)}
+article strong{color:var(--fg);font-weight:500}
+article ul{margin:0 0 22px 0;padding-left:0;list-style:none}
+article li{position:relative;padding-left:24px;margin-bottom:12px;color:#d6d2c8}
+article li::before{content:'→';position:absolute;left:0;color:var(--signal)}
+blockquote{margin:40px 0;padding:4px 0 4px 28px;border-left:2px solid var(--signal);font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(1.3rem,3vw,1.9rem);line-height:1.25;letter-spacing:-.02em;color:var(--fg)}
+.stat-band{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:40px 0;border-radius:3px;overflow:hidden}
+.stat-band .s{background:var(--ink);padding:24px 20px}
+.stat-band .s .v{font-family:'Bricolage Grotesque';font-weight:700;font-size:1.9rem;color:var(--signal)}
+.stat-band .s .k{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-top:8px}
+@media(max-width:620px){.stat-band{grid-template-columns:1fr}}
+.cta{margin-top:80px;border:1px solid var(--line);border-radius:4px;padding:40px;background:linear-gradient(160deg,#101012,#0b0b0c)}
+.cta h3{font-family:'Bricolage Grotesque';font-weight:700;font-size:1.6rem;margin-bottom:12px;letter-spacing:-.02em}
+.cta p{color:var(--mut);margin-bottom:24px}
+.cta a.btn{display:inline-flex;align-items:center;gap:8px;background:var(--signal);color:#0b0b0c;padding:14px 24px;border-radius:2px;font-family:'IBM Plex Mono';font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.cta a.btn:hover{background:#bcff73;text-decoration:none}
+footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<nav class="bar">
+  <a class="brand" href="../index.html">◍ BRIAN ANDERSON</a>
+  <a class="back mono" href="../index.html#notes">← FIELD NOTES</a>
+</nav>
+
+<div class="wrap">
+<article>
+  <header>
+    <div class="kick mono"><span>2026.04</span><span class="cat">AUDIO</span><span>· 7 MIN READ</span></div>
+    <h1>Sub-250ms: Latency in a Live Telemetry Platform</h1>
+    <p class="dek">“Real-time” is a number, not a vibe. On a platform that monitors sound across distributed physical spaces, I treat 250 milliseconds as a hard budget — the line between a dashboard that feels live and one that feels like a report. Here's the architecture that holds it.</p>
+  </header>
+
+  <p class="lead">When someone says a system is "real-time," ask them for the number. Real-time isn't a feeling — it's a latency budget, and if nobody's defined it, nobody's defended it. On a live sound-monitoring platform I built to measure sound pressure across many physical spaces at once, that number is <strong>250 milliseconds</strong>: the time from a microphone sensing a change to that change appearing on a screen. Everything in the architecture exists to protect it.</p>
+
+  <h2>Why 250 milliseconds, specifically</h2>
+
+  <p>The threshold isn't arbitrary. Around a quarter of a second is roughly where human perception stops reading two events as cause-and-effect and starts reading them as the same event. Under it, a number on a dashboard moves <em>as</em> the room gets louder — the operator trusts it, reacts to it, makes decisions on it. Over it, the value is always reporting a moment that has already passed, and people quietly stop believing it. The latency budget isn't a performance stat. It's whether the tool is trustworthy.</p>
+
+  <blockquote>Real-time is a latency budget, not a vibe. If nobody can name the number, nobody is defending it.</blockquote>
+
+  <h2>The tension: fast and durable pull in opposite directions</h2>
+
+  <p>Here's why this is hard. A live platform has two jobs that fight each other:</p>
+
+  <ul>
+    <li><strong>Be instant.</strong> Get the latest reading to the screen the moment it exists, with the fewest hops possible.</li>
+    <li><strong>Lose nothing.</strong> Persist every reading durably, in order, so you can grade compliance, chart trends, and prove what happened hours or weeks later.</li>
+  </ul>
+
+  <p>If you try to serve both from one pipeline, you lose both. Make the live path go through the durable database and every screen update inherits write latency, retries, and indexing. Make the durable path keep up with the live cadence and you hammer storage with traffic it was never shaped for. The fix isn't a faster single path — it's <strong>two paths</strong>.</p>
+
+  <h2>The dual-path architecture</h2>
+
+  <p>So the system splits the instant the data leaves the sensor. An <strong>edge agent</strong> in each space samples the sound level, does the signal processing locally, and emits a compact stream of readings. From there the data forks:</p>
+
+  <ul>
+    <li><strong>The fast path</strong> — readings are pushed straight to live dashboards over a persistent connection, in-memory the whole way, no database in the loop. This is the path that has to clear the 250ms budget, so it's kept deliberately thin: minimal hops, minimal serialization, no blocking work.</li>
+    <li><strong>The durable path</strong> — the same readings flow, in parallel, into time-series storage on their own schedule. This path optimizes for completeness and order, not speed. It can buffer, batch, and retry without ever touching what the operator sees live.</li>
+  </ul>
+
+  <p>The two never block each other. The live view stays instant because the slow, important work of persistence happens off to the side. Decoupling them is the whole trick — and it's a pattern that shows up in every responsive system, not just this one.</p>
+
+  <div class="stat-band">
+    <div class="s"><div class="v">&lt;250ms</div><div class="k">sensor → screen budget</div></div>
+    <div class="s"><div class="v">2</div><div class="k">decoupled data paths</div></div>
+    <div class="s"><div class="v">edge</div><div class="k">processing at the source</div></div>
+  </div>
+
+  <h2>Why the processing has to live at the edge</h2>
+
+  <p>You can't make latency you've already spent come back. If raw audio had to travel to the cloud to be turned into a sound-pressure number, the round trip alone would blow the budget before the data even reached a dashboard. So the meaningful computation happens <em>in the room</em>, on the edge agent: it ingests the signal, computes the metric, and ships a small, finished value instead of a fat raw stream.</p>
+
+  <p>That single decision — <strong>process at the source, transmit the result</strong> — buys back most of the budget. It also makes the system resilient: a space keeps measuring and grading locally even if its connection to the cloud hiccups, then reconciles through the durable path when the link returns. The edge isn't just faster; it's what keeps each room honest on its own.</p>
+
+  <h2>Measure the budget, don't assume it</h2>
+
+  <p>The discipline that keeps a system like this honest is refusing to trust your own optimism about it. "It feels fast" is not a latency measurement. So the budget gets treated like any other requirement: instrument the path end to end, watch the real distribution, and care about the <strong>worst case, not the average</strong>. A system that's quick most of the time but stalls for a full second under load isn't real-time — it's real-time-ish, and the one moment it lags is the moment an operator needed it. You defend the tail, or you don't have a budget at all.</p>
+
+  <blockquote>“It feels fast” is not a measurement. Instrument the path, watch the worst case, and defend the tail.</blockquote>
+
+  <h2>The principle: latency is a feature you design for</h2>
+
+  <p>It's tempting to treat speed as something you tune at the end — ship the features, then optimize. But responsiveness can't be bolted on. The 250ms budget shaped every structural decision here: where computation lives, how many hops the data takes, whether persistence and delivery share a pipeline. By the time you're "optimizing," those decisions are already made. Latency is an architecture choice, made first, or it's a problem you can't fix later.</p>
+
+  <p>This is the same reason a reactive room feels alive and a real-time dashboard feels trustworthy: someone decided, up front, that a human's perception threshold was a hard requirement — and then engineered backward from it. Make the budget explicit, design the whole path around it, and "real-time" stops being a marketing word and becomes a property you can actually point to.</p>
+
+  <div class="cta">
+    <h3>Need something that's actually real-time?</h3>
+    <p>I design live telemetry and sensing systems with explicit latency budgets — edge processing, decoupled data paths, and the discipline to defend the worst case. Let's talk about yours.</p>
+    <a class="btn" href="../index.html#contact">Start a conversation →</a>
+  </div>
+</article>
+</div>
+
+<footer class="mono">
+  <span>© 2026 BRIAN ANDERSON</span>
+  <a href="../index.html#notes">← ALL FIELD NOTES</a>
+</footer>
+</body>
+</html>
