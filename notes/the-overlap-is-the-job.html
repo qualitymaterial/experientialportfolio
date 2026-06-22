@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Overlap Is the Job — Brian Anderson</title>
+<meta name="description" content="Most AV people can't write software. Most developers have never tuned a room. The work worth doing lives in the gap between the two — and as AI makes the pure-technical layer cheap, the overlap is getting more valuable, not less." />
+<link rel="canonical" href="https://experientialportfolio.vercel.app/notes/the-overlap-is-the-job.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="The Overlap Is the Job" />
+<meta property="og:description" content="Why the most valuable work lives between AV engineering and software — and why the gap is widening in your favor." />
+<meta property="og:image" content="https://experientialportfolio.vercel.app/share.png" />
+<meta property="article:published_time" content="2026-06-20" />
+<meta property="article:author" content="Brian Anderson" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="The Overlap Is the Job" />
+<meta name="twitter:description" content="The work worth doing lives between AV engineering and software." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239dff3f'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-size='15' font-weight='700' fill='%230b0b0c'%3EBA%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Overlap Is the Job: Why the Best Work Lives Between AV Engineering and Software",
+  "description": "An argument for the M-shaped practitioner — someone with real depth in both physical systems and software — and why AI is widening the value of the overlap instead of erasing it.",
+  "author": { "@type": "Person", "name": "Brian Anderson", "jobTitle": "AV Systems Engineer" },
+  "datePublished": "2026-06-20",
+  "articleSection": "Craft",
+  "keywords": "experiential engineer, creative technologist, M-shaped, AV systems, software, interdisciplinary, responsive environments"
+}
+</script>
+<style>
+:root{
+  --ink:#0b0b0c;--fg:#e9e5dc;--bone:#c9c4b6;--mut:#8c877c;--faint:#5c584f;
+  --signal:#9dff3f;--signal-dim:#4f8f20;--line:rgba(233,229,220,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+.mono{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--mut)}
+a{color:var(--signal);text-decoration:none}
+a:hover{text-decoration:underline}
+::selection{background:var(--signal);color:#0b0b0c}
+.bar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:14px max(20px,4vw);border-bottom:1px solid var(--line);background:rgba(11,11,12,.7);backdrop-filter:blur(10px)}
+.bar a.brand{color:var(--fg);font-family:'IBM Plex Mono';font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.bar a.back{color:var(--mut)}
+.wrap{width:min(720px,92vw);margin:0 auto;padding:72px 0 120px}
+article header{margin-bottom:56px;border-bottom:1px solid var(--line);padding-bottom:40px}
+.kick{display:flex;gap:16px;align-items:center;margin-bottom:28px;flex-wrap:wrap}
+.kick .cat{color:var(--signal)}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(2.1rem,5.5vw,3.6rem);line-height:1.04;letter-spacing:-.025em;margin-bottom:24px}
+.dek{font-size:clamp(1.1rem,2.4vw,1.4rem);color:var(--bone);line-height:1.5;max-width:54ch}
+article h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-.02em;margin:56px 0 18px;line-height:1.1}
+article p{margin-bottom:22px;color:#d6d2c8;font-size:1.08rem}
+article p.lead{font-size:1.2rem;color:var(--fg)}
+article strong{color:var(--fg);font-weight:500}
+article ul{margin:0 0 22px 0;padding-left:0;list-style:none}
+article li{position:relative;padding-left:24px;margin-bottom:12px;color:#d6d2c8}
+article li::before{content:'→';position:absolute;left:0;color:var(--signal)}
+blockquote{margin:40px 0;padding:4px 0 4px 28px;border-left:2px solid var(--signal);font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(1.3rem,3vw,1.9rem);line-height:1.25;letter-spacing:-.02em;color:var(--fg)}
+.stat-band{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:40px 0;border-radius:3px;overflow:hidden}
+.stat-band .s{background:var(--ink);padding:24px 20px}
+.stat-band .s .v{font-family:'Bricolage Grotesque';font-weight:700;font-size:1.9rem;color:var(--signal)}
+.stat-band .s .k{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-top:8px}
+@media(max-width:620px){.stat-band{grid-template-columns:1fr}}
+.cta{margin-top:80px;border:1px solid var(--line);border-radius:4px;padding:40px;background:linear-gradient(160deg,#101012,#0b0b0c)}
+.cta h3{font-family:'Bricolage Grotesque';font-weight:700;font-size:1.6rem;margin-bottom:12px;letter-spacing:-.02em}
+.cta p{color:var(--mut);margin-bottom:24px}
+.cta a.btn{display:inline-flex;align-items:center;gap:8px;background:var(--signal);color:#0b0b0c;padding:14px 24px;border-radius:2px;font-family:'IBM Plex Mono';font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.cta a.btn:hover{background:#bcff73;text-decoration:none}
+footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<nav class="bar">
+  <a class="brand" href="../index.html">◍ BRIAN ANDERSON</a>
+  <a class="back mono" href="../index.html#notes">← FIELD NOTES</a>
+</nav>
+
+<div class="wrap">
+<article>
+  <header>
+    <div class="kick mono"><span>2026.06</span><span class="cat">CRAFT</span><span>· 6 MIN READ</span></div>
+    <h1>The Overlap Is the Job</h1>
+    <p class="dek">Most AV people can't write software. Most developers have never tuned a room. The work I actually care about lives in the gap between the two — and as AI makes the pure-technical layer cheap, that gap is getting more valuable, not less.</p>
+  </header>
+
+  <p class="lead">There's a particular kind of problem that almost nobody is positioned to solve. It needs someone who understands a physical room — the acoustics, the signal flow, the projector throw, the way a crowd actually moves — <em>and</em> someone who can write the software that makes the room respond. Those two people almost never live in the same body. When they do, the work that was impossible becomes obvious.</p>
+
+  <p>I'm one of those bodies. By trade I'm an AV systems engineer — I run audio, signal, and experience infrastructure across a network of physical spaces. But I also build software: edge agents, data pipelines, shaders, real-time visual systems. Neither half is unusual on its own. The combination is the entire point.</p>
+
+  <h2>Specialists own the center; the edges sit empty</h2>
+
+  <p>Every field rewards specialization, and for good reason — depth is hard and valuable. But specialization has a side effect: it leaves the borders unattended. The AV integrator stops where the software begins. The developer stops where the hardware and the room begin. Each hands off at the boundary, and the genuinely interesting problems are the ones that <em>live on that boundary</em> and require holding both sides in your head at once.</p>
+
+  <blockquote>Specialists compete for the crowded center. The valuable, lonely work is out at the edges, where two disciplines have to be true at the same time.</blockquote>
+
+  <p>A room that senses motion and answers it with light isn't an "AV project" or a "software project." It's both, inseparably — and if you split it across two specialists and a translation layer, you get something that works on paper, costs triple, and never quite feels alive. One person who can hold the whole loop builds a better thing, faster, because nothing gets lost in the handoff that never happens.</p>
+
+  <h2>What actually lives in the overlap</h2>
+
+  <p>This isn't abstract. Concretely, the overlap is where things like this get built:</p>
+
+  <ul>
+    <li>A sensing layer that reads a room with no cameras — which needs radio/signal understanding <em>and</em> the code to turn it into a usable input.</li>
+    <li>Projection and light that respond to live sound and motion — which needs show-control and acoustics instincts <em>and</em> a real-time graphics pipeline.</li>
+    <li>A telemetry platform that measures a physical phenomenon across many rooms in real time — which needs the domain knowledge to know what's worth measuring <em>and</em> the architecture to deliver it under a latency budget.</li>
+  </ul>
+
+  <p>In every case, the hard part isn't either discipline alone. It's the seam. And the seam is exactly where a specialist on either side has to stop.</p>
+
+  <h2>Why AI widens the gap instead of closing it</h2>
+
+  <p>Here's the part people get backwards. The instinct is that AI threatens the technical generalist — that if a model can write the code, the person who writes code is worth less. In practice it's the opposite, and it changes the whole calculation.</p>
+
+  <p>AI is collapsing the cost of the <em>pure</em> technical layer — the boilerplate, the glue, the "I know there's a library for this." What it does <strong>not</strong> give you is the judgment of someone who has stood in the dark room, watched the class peak, and knows which signal is worth capturing and what would ruin the experience to touch. The scarce thing was never the syntax. It's knowing what to build and why it matters in a specific physical reality.</p>
+
+  <blockquote>AI makes the technical half cheap. That makes the half it can't do — knowing what to build, and why, in a real room — the entire moat.</blockquote>
+
+  <p>So the leverage of the overlap is rising. When the implementation layer is nearly free, the premium moves to the person who can pair real domain understanding with the ability to direct that implementation — and then explain to a decision-maker why it's worth doing at all. That's not a generalist hedging their bets. It's a specific, defensible shape.</p>
+
+  <h2>The shape: deep in two things, fluent across the seam</h2>
+
+  <p>The useful version of this isn't "knows a little about everything." Breadth without depth is just noise. The shape that works is closer to an <strong>M</strong> — genuine depth in two distinct things (for me: physical systems and software), with a working fluency across the bridge between them. Two pillars, one span.</p>
+
+  <p>The honest cost: you will never be the single best in the world at either pillar, and you have to keep both sharp, which is twice the maintenance. But the combination is rarer than being top-1% at one thing, and it unlocks a category of work that the top-1% specialist structurally cannot reach alone.</p>
+
+  <h2>What it means if you're the one hiring it</h2>
+
+  <p>For a client, the overlap shows up as something very practical: you get <em>one</em> person who can scope a responsive room, build the thing, know why it matters to your business, and explain all three in the same conversation. No translation tax between the AV vendor and the dev shop. No system that technically functions but misses the feel of the room. The person who senses the space and the person who builds the system are the same person — so the seam between them simply isn't there.</p>
+
+  <blockquote>The rare value isn't technical depth or strategic framing. It's being able to build the thing, know why it matters, and explain both — to a room and to a CEO.</blockquote>
+
+  <p>I don't pick a lane, because the lane was never where the interesting work was. It's in the overlap — and that's exactly the part that's getting more valuable while everyone else races toward the crowded middle.</p>
+
+  <div class="cta">
+    <h3>Got a problem that lives on the seam?</h3>
+    <p>The ones that need both a real room and real software are the ones I want. If that's yours, let's talk.</p>
+    <a class="btn" href="../index.html#contact">Start a conversation →</a>
+  </div>
+</article>
+</div>
+
+<footer class="mono">
+  <span>© 2026 BRIAN ANDERSON</span>
+  <a href="../index.html#notes">← ALL FIELD NOTES</a>
+</footer>
+</body>
+</html>
