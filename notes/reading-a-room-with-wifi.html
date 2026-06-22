@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reading a Room With Wi-Fi — Brian Anderson</title>
+<meta name="description" content="The Wi-Fi already in your space is a motion sensor you haven't switched on. Here's how channel-state information (CSI) turns ordinary radios into camera-free, wearable-free presence and motion sensing — and why it's the cleanest reactive input for a responsive environment." />
+<link rel="canonical" href="https://experientialportfolio.vercel.app/notes/reading-a-room-with-wifi.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Reading a Room With Wi-Fi" />
+<meta property="og:description" content="How channel-state information turns ordinary Wi-Fi radios into camera-free motion sensing — and why it's the cleanest reactive input for a responsive space." />
+<meta property="og:image" content="https://experientialportfolio.vercel.app/share.png" />
+<meta property="article:published_time" content="2026-06-12" />
+<meta property="article:author" content="Brian Anderson" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Reading a Room With Wi-Fi" />
+<meta name="twitter:description" content="Camera-free motion sensing from the radios already in the room." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%239dff3f'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-size='15' font-weight='700' fill='%230b0b0c'%3EBA%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Reading a Room With Wi-Fi: Camera-Free Motion Sensing With Channel-State Information",
+  "description": "How channel-state information (CSI) turns ordinary Wi-Fi radios into camera-free, wearable-free motion and presence sensing for responsive environments.",
+  "author": { "@type": "Person", "name": "Brian Anderson", "jobTitle": "AV Systems Engineer" },
+  "datePublished": "2026-06-12",
+  "articleSection": "Sensing",
+  "keywords": "Wi-Fi sensing, channel state information, CSI, 802.11bf, ESP32, motion detection, presence detection, responsive environments, ambient computing"
+}
+</script>
+<style>
+:root{
+  --ink:#0b0b0c;--fg:#e9e5dc;--bone:#c9c4b6;--mut:#8c877c;--faint:#5c584f;
+  --signal:#9dff3f;--signal-dim:#4f8f20;--line:rgba(233,229,220,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+.mono{font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--mut)}
+a{color:var(--signal);text-decoration:none}
+a:hover{text-decoration:underline}
+::selection{background:var(--signal);color:#0b0b0c}
+.bar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:14px max(20px,4vw);border-bottom:1px solid var(--line);background:rgba(11,11,12,.7);backdrop-filter:blur(10px)}
+.bar a.brand{color:var(--fg);font-family:'IBM Plex Mono';font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.bar a.back{color:var(--mut)}
+.wrap{width:min(720px,92vw);margin:0 auto;padding:72px 0 120px}
+article header{margin-bottom:56px;border-bottom:1px solid var(--line);padding-bottom:40px}
+.kick{display:flex;gap:16px;align-items:center;margin-bottom:28px;flex-wrap:wrap}
+.kick .cat{color:var(--signal)}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(2.1rem,5.5vw,3.6rem);line-height:1.04;letter-spacing:-.025em;margin-bottom:24px}
+.dek{font-size:clamp(1.1rem,2.4vw,1.4rem);color:var(--bone);line-height:1.5;max-width:54ch}
+article h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-.02em;margin:56px 0 18px;line-height:1.1}
+article p{margin-bottom:22px;color:#d6d2c8;font-size:1.08rem}
+article p.lead{font-size:1.2rem;color:var(--fg)}
+article strong{color:var(--fg);font-weight:500}
+article ul{margin:0 0 22px 0;padding-left:0;list-style:none}
+article li{position:relative;padding-left:24px;margin-bottom:12px;color:#d6d2c8}
+article li::before{content:'→';position:absolute;left:0;color:var(--signal)}
+blockquote{margin:40px 0;padding:4px 0 4px 28px;border-left:2px solid var(--signal);font-family:'Bricolage Grotesque';font-weight:600;font-size:clamp(1.3rem,3vw,1.9rem);line-height:1.25;letter-spacing:-.02em;color:var(--fg)}
+.stat-band{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:40px 0;border-radius:3px;overflow:hidden}
+.stat-band .s{background:var(--ink);padding:24px 20px}
+.stat-band .s .v{font-family:'Bricolage Grotesque';font-weight:700;font-size:1.9rem;color:var(--signal)}
+.stat-band .s .k{font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-top:8px}
+@media(max-width:620px){.stat-band{grid-template-columns:1fr}}
+.cta{margin-top:80px;border:1px solid var(--line);border-radius:4px;padding:40px;background:linear-gradient(160deg,#101012,#0b0b0c)}
+.cta h3{font-family:'Bricolage Grotesque';font-weight:700;font-size:1.6rem;margin-bottom:12px;letter-spacing:-.02em}
+.cta p{color:var(--mut);margin-bottom:24px}
+.cta a.btn{display:inline-flex;align-items:center;gap:8px;background:var(--signal);color:#0b0b0c;padding:14px 24px;border-radius:2px;font-family:'IBM Plex Mono';font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.cta a.btn:hover{background:#bcff73;text-decoration:none}
+footer{border-top:1px solid var(--line);padding:24px max(20px,4vw);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<nav class="bar">
+  <a class="brand" href="../index.html">◍ BRIAN ANDERSON</a>
+  <a class="back mono" href="../index.html#notes">← FIELD NOTES</a>
+</nav>
+
+<div class="wrap">
+<article>
+  <header>
+    <div class="kick mono"><span>2026.06</span><span class="cat">SENSING</span><span>· 7 MIN READ</span></div>
+    <h1>Reading a Room With Wi-Fi</h1>
+    <p class="dek">Every space with Wi-Fi already has a motion sensor running — it just hasn't been switched on. Here's how the same radios that carry your traffic can sense where people are and how they move, with no cameras and nothing to wear.</p>
+  </header>
+
+  <p class="lead">Walk into almost any modern room and there's already a dense field of radio energy filling it — Wi-Fi, bouncing off the walls, the floor, the furniture, and you. We treat that field as plumbing: a pipe for data. But the same physics that makes Wi-Fi work also makes it a sensor, because the one thing that reliably disturbs a radio field is a body moving through it.</p>
+
+  <p>I build environments that respond to what's happening inside them, and the hardest part is almost never the response — it's the <em>sensing</em>. How does a room know someone walked in? That a class just got intense? That a corner is empty? The obvious answer is cameras, and the obvious answer is wrong for most of the spaces I care about. So I went looking for a sensor that was already installed everywhere, that nobody had to wear, and that nobody would object to. It turned out to be the Wi-Fi.</p>
+
+  <h2>The signal you're already ignoring</h2>
+
+  <p>When a Wi-Fi radio sends a packet, the receiver has to measure exactly how the signal arrived — how much it was delayed, attenuated, and phase-shifted on each of its subcarrier frequencies — just to decode the data correctly. That measurement is called <strong>channel-state information</strong>, or CSI. Every Wi-Fi link computes it constantly. It's the radio's picture of the room between the two antennas.</p>
+
+  <p>Here's the key: that picture changes the instant anything in the room moves. The signal doesn't travel in a single straight line — it takes dozens of paths, reflecting off every surface, and all of those copies recombine at the receiver. Move a hand through one of those paths and you change the sum. The data still decodes fine; you'd never notice. But the CSI shifts measurably. <strong>The room's furniture, walls, and bodies are all written into that measurement</strong> — and the moving parts stand out from the still ones.</p>
+
+  <blockquote>A still room produces a steady channel. A body moving through it writes a signature. Sensing is just learning to read the difference.</blockquote>
+
+  <p>So the technique is, at its core, simple: capture CSI many times a second, watch how much it's changing from one moment to the next, and turn that into a single number — a <strong>motion-energy score</strong>. Flat line, empty room. Rising, someone's active. It's the same live value you'll see ticking on the home page of this site, pulled straight off a radio.</p>
+
+  <h2>What it costs: about twelve dollars</h2>
+
+  <p>The thing that makes this practical rather than academic is that you don't need exotic hardware. A common <strong>ESP32</strong> microcontroller — a few dollars, the size of a stick of gum — can expose raw CSI from its Wi-Fi radio. Drop a couple of them into a space, point them at each other or at the existing access point, and you have a sensing layer for the price of a sandwich.</p>
+
+  <div class="stat-band">
+    <div class="s"><div class="v">~$12</div><div class="k">hardware per sensing link</div></div>
+    <div class="s"><div class="v">0</div><div class="k">cameras · wearables · apps</div></div>
+    <div class="s"><div class="v">802.11bf</div><div class="k">Wi-Fi sensing standard, ratifying</div></div>
+  </div>
+
+  <p>And this isn't a fringe hack anymore. The IEEE has an entire task group — <strong>802.11bf</strong> — formalizing Wi-Fi sensing as a first-class feature of the standard, so future access points will expose this capability natively. The hobbyist version I prototype with today is the early edge of something that's about to be built into the infrastructure everywhere.</p>
+
+  <h2>Why not just use a camera?</h2>
+
+  <p>Because the camera is the wrong tool for the rooms I work in, on almost every axis that matters:</p>
+
+  <ul>
+    <li><strong>Privacy.</strong> A camera records identifiable people. CSI is a single fluctuating number — it can tell you <em>that</em> the room is active and roughly where, but it has no face, no image, nothing to leak or subpoena. For a wellness space, a clinic, a home, or anywhere people expect not to be filmed, that distinction is the whole game.</li>
+    <li><strong>Darkness.</strong> Half the spaces I build for are deliberately dim — a dark studio, a stage, a lounge. Radio doesn't care about light. It works in pitch black exactly as well as in daylight.</li>
+    <li><strong>Coverage.</strong> Radio passes through partitions and around corners. One link can sense a volume a camera would need several angles to cover, with no blind spots behind the equipment.</li>
+    <li><strong>Friction.</strong> Nobody installs an app, charges a wearable, or stands in the right spot. The sensing is ambient. People just exist in the room and the room already knows.</li>
+  </ul>
+
+  <p>I want to be honest about the trade, though, because that's the difference between an engineer and a salesman. CSI sensing is <strong>coarse</strong>. It is fantastic at "is there motion, how much, roughly where" and it does not give you a skeleton, an identity, or a precise count of people. It drifts as the room's furniture changes and usually wants a short re-baseline. It is a presence-and-energy sensor, not a measuring tape. The skill is using it for exactly what it's good at — and reaching for vision only when you genuinely need to see.</p>
+
+  <h2>What you do with a number that means "the room is alive"</h2>
+
+  <p>Once a space can emit a clean motion-energy signal, it becomes an input you can wire into anything:</p>
+
+  <ul>
+    <li><strong>Reactive light and visuals</strong> that swell with the room's energy instead of running on a fixed timeline.</li>
+    <li><strong>Presence-aware infrastructure</strong> — screens, audio, and HVAC that wake on real occupancy and stand down when a zone is genuinely empty, not on a dumb timer.</li>
+    <li><strong>Operational signal</strong> — anonymous, aggregate occupancy and activity patterns across a space, with no one identified.</li>
+    <li><strong>A trigger layer</strong> for experiences that should only fire when someone is actually there to witness them.</li>
+  </ul>
+
+  <p>None of that requires a camera in the ceiling. It requires reading a signal the building was already broadcasting.</p>
+
+  <h2>The principle: the room is already instrumented</h2>
+
+  <p>Wi-Fi sensing is the clearest example of an idea that runs under everything I build: the most elegant sensor is usually one that's already in the room, doing another job. Before you add hardware, ask what the space is <em>already emitting</em> — the radio field, the sound, the power draw, the network traffic — and whether you can read responsiveness out of that instead of bolting on more.</p>
+
+  <blockquote>The best sensor is the one that's already installed. You don't add it to the room — you notice it's been there all along.</blockquote>
+
+  <p>A camera-free room that still knows when it's alive isn't a compromise. It's a better-designed system — cheaper, more private, more robust, and invisible to the people inside it. That's what responsive environments should feel like: the room reacts, and you never see the wiring.</p>
+
+  <div class="cta">
+    <h3>Want a space that senses without watching?</h3>
+    <p>I design responsive environments and the sensing layers underneath them — camera-free where it counts. Let's talk about yours.</p>
+    <a class="btn" href="../index.html#contact">Start a conversation →</a>
+  </div>
+</article>
+</div>
+
+<footer class="mono">
+  <span>© 2026 BRIAN ANDERSON</span>
+  <a href="../index.html#notes">← ALL FIELD NOTES</a>
+</footer>
+</body>
+</html>
