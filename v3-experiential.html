@@ -586,7 +586,7 @@ function vis(el){const r=el.getBoundingClientRect();return r.top<innerHeight&&r.
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.15});
 document.querySelectorAll('.rev,.clip').forEach(el=>io.observe(el));
 
-document.querySelectorAll('[data-edit="cal"]').forEach(a=>a.setAttribute('href','https://cal.com/'));
+document.querySelectorAll('[data-edit="cal"]').forEach(a=>a.setAttribute('href','https://cal.com/brian-anderson-4pmuol/30min'));
 document.querySelectorAll('[data-edit="x"]').forEach(a=>a.setAttribute('href','https://x.com/'));
 </script>
 </body>
