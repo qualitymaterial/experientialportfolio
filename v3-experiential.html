@@ -142,6 +142,10 @@ section{padding:120px 0;border-top:1px solid var(--line)}
 
 .twocol{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:start}
 @media(max-width:880px){.twocol{grid-template-columns:1fr;gap:28px}}
+.about-photo{position:relative;margin:72px auto 0;width:var(--c);height:clamp(280px,42vw,540px);overflow:hidden;border:1px solid var(--line);background:#101012}
+.about-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,11,12,.42),transparent 42%),linear-gradient(0deg,rgba(11,11,12,.25),transparent 38%);pointer-events:none}
+.about-photo img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:saturate(.82) contrast(1.08)}
+.about-photo figcaption{position:absolute;z-index:1;left:18px;bottom:14px;color:var(--bone);font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.12em;text-transform:uppercase}
 .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-block:1px solid var(--line)}
 .pstep{background:var(--ink);padding:36px max(24px,3vw);display:flex;flex-direction:column}
 .pstep .pn{font-family:'Bricolage Grotesque';font-size:2rem;font-weight:700;color:var(--faint)}
@@ -335,6 +339,10 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;paddin
       <p>That combination is the whole point. Anyone can bolt on an animation. I build systems that sense and react, because that's what I do in the physical world every day.</p>
     </div>
   </div>
+  <figure class="about-photo rev">
+    <img src="images/reactive-room-editorial.jpg" alt="A dark responsive room with green projection, moving figures, and AV infrastructure" loading="lazy" />
+    <figcaption>Responsive environment / live signal / projection</figcaption>
+  </figure>
 </section>
 
 <!-- BRIDGE -->
