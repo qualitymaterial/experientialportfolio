@@ -61,6 +61,10 @@ main,.statusbar,footer{position:relative;z-index:2}
 .palette button{width:18px;height:18px;border-radius:50%;border:1px solid rgba(233,229,220,.34);background:var(--swatch);cursor:none;transition:transform .2s,border-color .2s,box-shadow .2s}
 .palette button:hover,.palette button:focus-visible{transform:scale(1.16);border-color:var(--fg);outline:none}
 .palette button.active{box-shadow:0 0 0 3px rgba(var(--signal-rgb),.16),0 0 16px rgba(var(--signal-rgb),.55);border-color:var(--fg)}
+.custom-accent{position:relative;width:18px;height:18px;border:1px dashed rgba(233,229,220,.52);border-radius:50%;cursor:pointer;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s}
+.custom-accent:hover,.custom-accent:focus-within{transform:scale(1.16);border-color:var(--fg);box-shadow:0 0 0 3px rgba(var(--signal-rgb),.16)}
+.custom-accent input{position:absolute;inset:-4px;width:26px;height:26px;opacity:0;cursor:pointer}
+.custom-accent::after{content:'+';position:absolute;inset:0;display:grid;place-items:center;color:var(--fg);font-family:'IBM Plex Mono';font-size:14px;line-height:1;pointer-events:none}
 @media(pointer:coarse){.palette button{cursor:pointer}}
 @media(max-width:640px){.palette{right:16px;bottom:14px}.palette span{display:none}}
 
@@ -142,10 +146,11 @@ section{padding:120px 0;border-top:1px solid var(--line)}
 
 .twocol{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:start}
 @media(max-width:880px){.twocol{grid-template-columns:1fr;gap:28px}}
-.about-photo{position:relative;margin:72px auto 0;width:var(--c);height:clamp(280px,42vw,540px);overflow:hidden;border:1px solid var(--line);background:#101012}
-.about-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,11,12,.42),transparent 42%),linear-gradient(0deg,rgba(11,11,12,.25),transparent 38%);pointer-events:none}
+.about-photo{position:relative;margin:72px auto 0;width:var(--c);height:clamp(280px,42vw,540px);overflow:hidden;border:1px solid var(--line);background:#101012;isolation:isolate}
+.about-photo::before{content:'';position:absolute;z-index:1;inset:0;background:var(--signal);mix-blend-mode:color;opacity:.62;pointer-events:none;transition:background-color .45s ease}
+.about-photo::after{content:'';position:absolute;z-index:2;inset:0;background:linear-gradient(90deg,rgba(11,11,12,.42),transparent 42%),linear-gradient(0deg,rgba(11,11,12,.25),transparent 38%);pointer-events:none}
 .about-photo img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:saturate(.82) contrast(1.08)}
-.about-photo figcaption{position:absolute;z-index:1;left:18px;bottom:14px;color:var(--bone);font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.about-photo figcaption{position:absolute;z-index:3;left:18px;bottom:14px;color:var(--bone);font-family:'IBM Plex Mono';font-size:10px;letter-spacing:.12em;text-transform:uppercase}
 .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-block:1px solid var(--line)}
 .pstep{background:var(--ink);padding:36px max(24px,3vw);display:flex;flex-direction:column}
 .pstep .pn{font-family:'Bricolage Grotesque';font-size:2rem;font-weight:700;color:var(--faint)}
@@ -219,6 +224,7 @@ footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;paddin
   <button type="button" data-accent="cyan" style="--swatch:#38f2ff" aria-label="Cyan signal color"></button>
   <button type="button" data-accent="magenta" style="--swatch:#ff4fd8" aria-label="Magenta signal color"></button>
   <button type="button" data-accent="blue" style="--swatch:#5d8cff" aria-label="Blue signal color"></button>
+  <label class="custom-accent" aria-label="Choose a custom signal color"><input id="custom-accent" type="color" value="#9dff3f" aria-label="Custom signal color" /></label>
 </div>
 
 <main>
@@ -473,20 +479,25 @@ const ACCENTS={
   magenta:{signal:'#ff4fd8',dim:'#9c227f',bright:'#ff91e8',rgb:'255,79,216'},
   blue:{signal:'#5d8cff',dim:'#274ca8',bright:'#9ab7ff',rgb:'93,140,255'}
 };
-function setAccent(name){
-  const theme=ACCENTS[name]||ACCENTS.volt;
+function rgbFromHex(hex){const value=hex.replace('#','');return {r:parseInt(value.slice(0,2),16),g:parseInt(value.slice(2,4),16),b:parseInt(value.slice(4,6),16)};}
+function mixHex(hex,target,amount){const a=rgbFromHex(hex),b=rgbFromHex(target),mix=key=>Math.round(a[key]+(b[key]-a[key])*amount).toString(16).padStart(2,'0');return `#${mix('r')}${mix('g')}${mix('b')}`;}
+function customTheme(hex){const rgb=rgbFromHex(hex);return {signal:hex,dim:mixHex(hex,'#000000',.5),bright:mixHex(hex,'#ffffff',.38),rgb:`${rgb.r},${rgb.g},${rgb.b}`};}
+function setAccent(name,customHex){
+  const theme=name==='custom'&&/^#[0-9a-f]{6}$/i.test(customHex||'')?customTheme(customHex):ACCENTS[name]||ACCENTS.volt;
   const r=document.documentElement.style;
   r.setProperty('--signal',theme.signal);
   r.setProperty('--signal-dim',theme.dim);
   r.setProperty('--signal-bright',theme.bright);
   r.setProperty('--signal-rgb',theme.rgb);
   document.querySelectorAll('[data-accent]').forEach(btn=>btn.classList.toggle('active',btn.dataset.accent===name));
-  try{localStorage.setItem('signal-accent',name);}catch(e){}
+  const custom=document.getElementById('custom-accent');if(custom)custom.value=theme.signal;
+  try{localStorage.setItem('signal-accent',name);if(name==='custom')localStorage.setItem('signal-custom',theme.signal);}catch(e){}
 }
 function signal(){return getComputedStyle(document.documentElement).getPropertyValue('--signal').trim()||'#9dff3f';}
 function signalAlpha(a){return `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--signal-rgb').trim()||'157,255,63'},${a})`;}
 document.querySelectorAll('[data-accent]').forEach(btn=>btn.addEventListener('click',()=>setAccent(btn.dataset.accent)));
-try{setAccent(localStorage.getItem('signal-accent')||'volt');}catch(e){setAccent('volt');}
+document.getElementById('custom-accent')?.addEventListener('input',event=>setAccent('custom',event.target.value));
+try{const saved=localStorage.getItem('signal-accent')||'volt';setAccent(saved,saved==='custom'?localStorage.getItem('signal-custom'):undefined);}catch(e){setAccent('volt');}
 
 if(!TOUCH&&!RED){
   const cx=document.querySelector('.cx'),co=document.getElementById('coread');

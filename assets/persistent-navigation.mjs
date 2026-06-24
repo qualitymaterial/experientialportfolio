@@ -17,6 +17,32 @@ const TRACKS = [
 ];
 const AUDIO_STATE_KEY = 'persistent-audio-state';
 
+function rgbFromHex(hex) {
+  const value = hex.replace('#', '');
+  return { r: parseInt(value.slice(0, 2), 16), g: parseInt(value.slice(2, 4), 16), b: parseInt(value.slice(4, 6), 16) };
+}
+
+function mixHex(hex, target, amount) {
+  const source = rgbFromHex(hex);
+  const destination = rgbFromHex(target);
+  const mix = (key) => Math.round(source[key] + (destination[key] - source[key]) * amount).toString(16).padStart(2, '0');
+  return `#${mix('r')}${mix('g')}${mix('b')}`;
+}
+
+function restoreCustomAccent() {
+  try {
+    if (localStorage.getItem('signal-accent') !== 'custom') return;
+    const signal = localStorage.getItem('signal-custom');
+    if (!/^#[0-9a-f]{6}$/i.test(signal || '')) return;
+    const rgb = rgbFromHex(signal);
+    const root = document.documentElement.style;
+    root.setProperty('--signal', signal);
+    root.setProperty('--signal-dim', mixHex(signal, '#000000', .5));
+    root.setProperty('--signal-bright', mixHex(signal, '#ffffff', .38));
+    root.setProperty('--signal-rgb', `${rgb.r},${rgb.g},${rgb.b}`);
+  } catch {}
+}
+
 function getStoredAudioState() {
   try {
     return JSON.parse(sessionStorage.getItem(AUDIO_STATE_KEY)) || {};
@@ -230,6 +256,7 @@ function startRouter() {
 }
 
 if (typeof document !== 'undefined') {
+  restoreCustomAccent();
   ensureRouteRoot();
   markRouteStyle();
   mountAudioController();
